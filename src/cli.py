@@ -174,7 +174,7 @@ def parse_args() -> argparse.Namespace:
     run_parser.add_argument(
         "--ocr_min_conf",
         type=float,
-        default=0.1,
+        default=0.05,
         help="Minimum OCR confidence for accepting a plate ID.",
     )
     run_parser.add_argument(

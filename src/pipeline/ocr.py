@@ -42,10 +42,14 @@ def _get_reader() -> easyocr.Reader:
 
 
 def _preprocess(crop: np.ndarray) -> np.ndarray:
-    height, width = crop.shape[:2]
-    resized = cv2.resize(crop, (width * 2, height * 2), interpolation=cv2.INTER_CUBIC)
-    gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
-    denoised = cv2.GaussianBlur(gray, (3, 3), 0)
+    if crop.ndim == 3:
+        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+    else:
+        gray = crop.copy()
+
+    height, width = gray.shape[:2]
+    resized = cv2.resize(gray, (width * 2, height * 2), interpolation=cv2.INTER_CUBIC)
+    denoised = cv2.GaussianBlur(resized, (3, 3), 0)
     return denoised
 
 
@@ -110,3 +114,4 @@ def read_plate_text(crop: np.ndarray) -> tuple[str, float]:
     confs = letters_confs + digits_confs
     mean_conf = sum(confs) / len(confs) if confs else 0.0
     return raw_text, mean_conf
+

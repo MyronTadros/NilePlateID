@@ -10,12 +10,12 @@
     "input": "data/incoming",
     "iou": 0.45,
     "max_debug": true,
-    "ocr_min_conf": 0.1,
+    "ocr_min_conf": 0.05,
     "pad": 0.05,
     "plates": "data/plates",
     "preview_limit": 10,
     "weights": "models/best.pt"
   },
-  "git_commit": "afe7bf4db7e84dfdb232acd60b4595c38ea2d69f",
-  "timestamp": "2025-12-28T17:06:46.906537+00:00"
+  "git_commit": "b329761c366f4f60852a7613c517f02277cff18a",
+  "timestamp": "2025-12-28T18:43:05.304867+00:00"
 }
