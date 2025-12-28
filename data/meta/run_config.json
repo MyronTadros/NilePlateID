@@ -1,0 +1,21 @@
+{
+  "args": {
+    "command": "run",
+    "conf": 0.25,
+    "debug_dir": "data/meta/debug",
+    "device": null,
+    "force": false,
+    "gallery": "data/gallery",
+    "index": "data/meta/index.csv",
+    "input": "data/incoming",
+    "iou": 0.45,
+    "max_debug": true,
+    "ocr_min_conf": 0.3,
+    "pad": 0.05,
+    "plates": "data/plates",
+    "preview_limit": 10,
+    "weights": "models/best.pt"
+  },
+  "git_commit": null,
+  "timestamp": "2025-12-28T15:19:43.939884+00:00"
+}

@@ -1,0 +1,20 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+
+# Generated data
+/data/datasets/
+
+# Ultralytics outputs
+/runs/
+/outputs/
+
+# Model weights
+*.pt
+
+# OS
+.DS_Store
+
+# Keep gitkeeps
+!models/.gitkeep
