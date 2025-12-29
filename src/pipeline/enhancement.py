@@ -129,20 +129,20 @@ def enhance_plate_crop(crop: np.ndarray, crop_number: int = 1) -> np.ndarray:
     steps_dir.mkdir(parents=True, exist_ok=True)
     
     cv2.imwrite(f"temp/crop_original_{crop_number}.jpg", crop)
-    cv2.imwrite("temp/steps/3_detected_plate.png", crop)
+    cv2.imwrite(f"temp/steps/crop{crop_number}_3_detected_plate.png", crop)
     
     adjusted, alpha, beta = automatic_brightness_and_contrast(crop)
     LOGGER.debug(f"Brightness/contrast adjusted: alpha={alpha:.2f}, beta={beta:.2f}")
-    cv2.imwrite("temp/steps/4_brightness_contrast_adjustment.png", adjusted)
+    cv2.imwrite(f"temp/steps/crop{crop_number}_4_brightness_contrast_adjustment.png", adjusted)
     
     upscaled = upscale_image(adjusted, scale_factor=2)
-    cv2.imwrite("temp/steps/4.5_upscaled.png", upscaled)
+    cv2.imwrite(f"temp/steps/crop{crop_number}_4.5_upscaled.png", upscaled)
     
     gray = cv2.cvtColor(upscaled, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite("temp/steps/5_gray.png", gray)
+    cv2.imwrite(f"temp/steps/crop{crop_number}_5_gray.png", gray)
     
     ret, th = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-    cv2.imwrite("temp/steps/6_threshold.png", th)
+    cv2.imwrite(f"temp/steps/crop{crop_number}_6_threshold.png", th)
     
     cv2.imwrite(f"temp/crop{crop_number}.jpg", th)
     

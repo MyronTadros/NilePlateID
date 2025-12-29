@@ -196,6 +196,11 @@ def parse_args() -> argparse.Namespace:
         help="Ultralytics device string (e.g., 'cpu', '0').",
     )
     run_parser.add_argument(
+        "--use_enhancement",
+        action="store_true",
+        help="Use enhanced preprocessing (brightness/contrast adjustment).",
+    )
+    run_parser.add_argument(
         "--force",
         action="store_true",
         help="Overwrite outputs if they already exist.",
@@ -900,6 +905,7 @@ def _run_pipeline(args: argparse.Namespace) -> int:
     debug_saved = 0
     previews_saved = 0
     preview_remaining = preview_limit if preview_dir is not None else 0
+    global_crop_counter = 0
     for image_result in detections:
         image_path = Path(str(image_result["image_path"]))
         image = cv2.imread(str(image_path))
@@ -987,7 +993,12 @@ def _run_pipeline(args: argparse.Namespace) -> int:
                 LOGGER.warning("Empty crop for %s", image_path)
                 continue
 
-            raw_text, ocr_conf = read_plate_text(plate_crop)
+            global_crop_counter += 1
+            raw_text, ocr_conf = read_plate_text(
+                plate_crop, 
+                use_enhancement=args.use_enhancement,
+                crop_number=global_crop_counter
+            )
             if raw_text.strip() and ocr_conf >= args.ocr_min_conf:
                 plate_id = normalize_plate_id(raw_text)
             else:

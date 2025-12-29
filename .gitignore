@@ -17,6 +17,9 @@ models/reid/**
 
 # OS
 .DS_Store
+/NilePlateID/temp/
+/temp/*
+/NilePlateID/temp/*
 
 # Keep gitkeeps
 !models/.gitkeep
