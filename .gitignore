@@ -24,3 +24,5 @@ models/reid/**
 # Keep gitkeeps
 !models/.gitkeep
 !models/reid/.gitkeep
+data/meta/debug/*
+data/meta/detections.json
