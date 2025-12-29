@@ -1,0 +1,12 @@
+wheel
+torch
+pytorch_metric_learning
+numpy
+pandas
+torchvision
+matplotlib
+pyyaml
+timm
+efficientnet_pytorch
+pretrainedmodels
+tqdm

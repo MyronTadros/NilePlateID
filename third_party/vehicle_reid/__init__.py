@@ -1,0 +1,1 @@
+"""Vendored vehicle ReID code."""

@@ -20,6 +20,8 @@ from src.pipeline.detect import run_detection
 from src.pipeline.normalize import normalize_plate_id
 from src.pipeline.ocr import read_plate_text
 from src.pipeline.visualize import draw_debug, draw_plate_id_debug
+from src.pipeline.video_frames import extract_frames
+from src.reid.search import build_reid_index, run_reid_search_cached
 
 LOGGER = logging.getLogger(__name__)
 IMAGE_EXTS = {".jpg", ".jpeg", ".png"}
@@ -194,6 +196,327 @@ def parse_args() -> argparse.Namespace:
         help="Ultralytics device string (e.g., 'cpu', '0').",
     )
     run_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite outputs if they already exist.",
+    )
+
+
+    reid_parser = subparsers.add_parser(
+        "reid",
+        help="Search for cars by plate_id using ReID.",
+    )
+    reid_parser.add_argument(
+        "--plate_id",
+        required=True,
+        help="Plate ID to search for (matches data/gallery/<plate_id>/).",
+    )
+    reid_parser.add_argument(
+        "--weights",
+        default="models/best.pt",
+        help="Path to YOLO weights (repo-relative by default).",
+    )
+    reid_parser.add_argument(
+        "--input",
+        default="data/incoming",
+        help="Image file or directory with query frames (repo-relative by default).",
+    )
+    reid_parser.add_argument(
+        "--gallery",
+        default="data/gallery",
+        help="Directory of gallery car crops (repo-relative by default).",
+    )
+    reid_parser.add_argument(
+        "--reid_opts",
+        default="models/reid/opts.yaml",
+        help="Path to ReID opts.yaml (repo-relative by default).",
+    )
+    reid_parser.add_argument(
+        "--reid_ckpt",
+        default="models/reid/net.pth",
+        help="Path to ReID checkpoint (repo-relative by default).",
+    )
+    reid_parser.add_argument(
+        "--debug_dir",
+        default="data/meta/reid",
+        help="Directory for ReID outputs (repo-relative by default).",
+    )
+    reid_parser.add_argument(
+        "--index_dir",
+        default="data/meta/reid",
+        help="Directory for cached ReID index (repo-relative by default).",
+    )
+    reid_parser.add_argument(
+        "--conf",
+        type=float,
+        default=0.25,
+        help="Confidence threshold for car detection.",
+    )
+    reid_parser.add_argument(
+        "--iou",
+        type=float,
+        default=0.45,
+        help="IoU threshold for car detection.",
+    )
+    reid_parser.add_argument(
+        "--pad",
+        type=float,
+        default=0.05,
+        help="Padding fraction applied to car crops.",
+    )
+    reid_parser.add_argument(
+        "--input_size",
+        type=int,
+        default=224,
+        help="Input size for the ReID backbone.",
+    )
+    reid_parser.add_argument(
+        "--batch_size",
+        type=int,
+        default=32,
+        help="Batch size for ReID embedding extraction.",
+    )
+    reid_parser.add_argument(
+        "--min_score",
+        type=float,
+        default=0.0,
+        help="Minimum cosine similarity score to keep a match.",
+    )
+    reid_parser.add_argument(
+        "--top_k",
+        type=int,
+        default=5,
+        help="Keep top-k matches per image (0 keeps all).",
+    )
+    reid_parser.add_argument(
+        "--device",
+        default=None,
+        help="Ultralytics device string (e.g., 'cpu', '0').",
+    )
+    reid_parser.add_argument(
+        "--reid_device",
+        default=None,
+        help="Torch device for ReID (e.g., 'cpu', 'cuda', '0').",
+    )
+    reid_parser.add_argument(
+        "--car_label",
+        default="car",
+        help="Substring used to identify car class names.",
+    )
+    reid_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite outputs if they already exist.",
+    )
+
+
+    reid_index_parser = subparsers.add_parser(
+        "reid-index",
+        help="Build cached ReID gallery embeddings.",
+    )
+    reid_index_parser.add_argument(
+        "--gallery_dir",
+        default="data/gallery",
+        help="Directory of gallery car crops (repo-relative by default).",
+    )
+    reid_index_parser.add_argument(
+        "--reid_opts",
+        default="models/reid/opts.yaml",
+        help="Path to ReID opts.yaml (repo-relative by default).",
+    )
+    reid_index_parser.add_argument(
+        "--reid_ckpt",
+        default="models/reid/net.pth",
+        help="Path to ReID checkpoint (repo-relative by default).",
+    )
+    reid_index_parser.add_argument(
+        "--index_dir",
+        default="data/meta/reid",
+        help="Directory for cached ReID index (repo-relative by default).",
+    )
+    reid_index_parser.add_argument(
+        "--input_size",
+        type=int,
+        default=224,
+        help="Input size for the ReID backbone.",
+    )
+    reid_index_parser.add_argument(
+        "--batch_size",
+        type=int,
+        default=32,
+        help="Batch size for ReID embedding extraction.",
+    )
+    reid_index_parser.add_argument(
+        "--reid_device",
+        default=None,
+        help="Torch device for ReID (e.g., 'cpu', 'cuda', '0').",
+    )
+    reid_index_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite index outputs if they already exist.",
+    )
+
+    reid_search_parser = subparsers.add_parser(
+        "reid-search",
+        help="Search by plate_id using cached ReID embeddings.",
+    )
+    reid_search_parser.add_argument(
+        "--plate_id",
+        required=True,
+        help="Plate ID to search for (matches cached index).",
+    )
+    reid_search_parser.add_argument(
+        "--weights",
+        default="models/best.pt",
+        help="Path to YOLO weights (repo-relative by default).",
+    )
+    reid_search_parser.add_argument(
+        "--input_dir",
+        default="data/incoming",
+        help="Image file or directory with query frames (repo-relative by default).",
+    )
+    reid_search_parser.add_argument(
+        "--index_dir",
+        default="data/meta/reid",
+        help="Directory containing cached ReID index (repo-relative by default).",
+    )
+    reid_search_parser.add_argument(
+        "--debug_dir",
+        default="data/meta/reid",
+        help="Directory for ReID search outputs (repo-relative by default).",
+    )
+    reid_search_parser.add_argument(
+        "--conf",
+        type=float,
+        default=0.25,
+        help="Confidence threshold for car detection.",
+    )
+    reid_search_parser.add_argument(
+        "--iou",
+        type=float,
+        default=0.45,
+        help="IoU threshold for car detection.",
+    )
+    reid_search_parser.add_argument(
+        "--pad",
+        type=float,
+        default=0.05,
+        help="Padding fraction applied to car crops.",
+    )
+    reid_search_parser.add_argument(
+        "--input_size",
+        type=int,
+        default=224,
+        help="Input size for the ReID backbone.",
+    )
+    reid_search_parser.add_argument(
+        "--batch_size",
+        type=int,
+        default=32,
+        help="Batch size for ReID embedding extraction.",
+    )
+    reid_search_parser.add_argument(
+        "--min_score",
+        type=float,
+        default=0.0,
+        help="Minimum cosine similarity score to keep a match.",
+    )
+    reid_search_parser.add_argument(
+        "--top_k",
+        type=int,
+        default=5,
+        help="Keep top-k matches per image (0 keeps all).",
+    )
+    reid_search_parser.add_argument(
+        "--device",
+        default=None,
+        help="Ultralytics device string (e.g., 'cpu', '0').",
+    )
+    reid_search_parser.add_argument(
+        "--reid_device",
+        default=None,
+        help="Torch device for ReID (e.g., 'cpu', 'cuda', '0').",
+    )
+    reid_search_parser.add_argument(
+        "--car_label",
+        default="car",
+        help="Substring used to identify car class names.",
+    )
+    reid_search_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Overwrite outputs if they already exist.",
+    )
+
+
+    video_parser = subparsers.add_parser(
+        "video-frames",
+        help="Extract frames from a video for the pipeline.",
+    )
+    video_parser.add_argument(
+        "--video",
+        required=True,
+        help="Path to the input video.",
+    )
+    video_parser.add_argument(
+        "--out_dir",
+        required=True,
+        help="Output directory for extracted frames.",
+    )
+    video_parser.add_argument(
+        "--require_ocr",
+        action="store_true",
+        help="Only keep frames where a plate is readable by OCR.",
+    )
+    video_parser.add_argument(
+        "--weights",
+        default="models/best.pt",
+        help="YOLO weights for plate detection (repo-relative by default).",
+    )
+    video_parser.add_argument(
+        "--conf",
+        type=float,
+        default=0.25,
+        help="Confidence threshold for plate detection.",
+    )
+    video_parser.add_argument(
+        "--iou",
+        type=float,
+        default=0.45,
+        help="IoU threshold for plate detection.",
+    )
+    video_parser.add_argument(
+        "--pad",
+        type=float,
+        default=0.05,
+        help="Padding fraction applied to plate crops.",
+    )
+    video_parser.add_argument(
+        "--ocr_min_conf",
+        type=float,
+        default=0.05,
+        help="Minimum OCR confidence to keep a frame.",
+    )
+    video_parser.add_argument(
+        "--device",
+        default=None,
+        help="Ultralytics device string (e.g., 'cpu', '0').",
+    )
+    video_group = video_parser.add_mutually_exclusive_group()
+    video_group.add_argument(
+        "--fps",
+        type=float,
+        default=2.0,
+        help="Target output FPS.",
+    )
+    video_group.add_argument(
+        "--every_n_frames",
+        type=int,
+        default=None,
+        help="Extract every Nth frame.",
+    )
+    video_parser.add_argument(
         "--force",
         action="store_true",
         help="Overwrite outputs if they already exist.",
@@ -769,6 +1092,96 @@ def _run_pipeline(args: argparse.Namespace) -> int:
     return result
 
 
+
+
+def _run_video_frames(args: argparse.Namespace) -> int:
+    return extract_frames(
+        video_path=Path(args.video),
+        out_dir=Path(args.out_dir),
+        fps=args.fps,
+        every_n_frames=args.every_n_frames,
+        force=args.force,
+        require_ocr=args.require_ocr,
+        weights_path=Path(args.weights),
+        conf=args.conf,
+        iou=args.iou,
+        pad=args.pad,
+        device=args.device,
+        ocr_min_conf=args.ocr_min_conf,
+    )
+
+
+def _run_reid_index(args: argparse.Namespace) -> int:
+    return build_reid_index(
+        gallery_dir=Path(args.gallery_dir),
+        reid_opts=Path(args.reid_opts),
+        reid_ckpt=Path(args.reid_ckpt),
+        output_dir=Path(args.index_dir),
+        input_size=args.input_size,
+        batch_size=args.batch_size,
+        reid_device=args.reid_device,
+        force=args.force,
+    )
+
+
+def _run_reid_search(args: argparse.Namespace) -> int:
+    return run_reid_search_cached(
+        plate_id=args.plate_id,
+        weights_path=Path(args.weights),
+        input_dir=Path(args.input_dir),
+        index_dir=Path(args.index_dir),
+        output_dir=Path(args.debug_dir),
+        conf=args.conf,
+        iou=args.iou,
+        pad=args.pad,
+        input_size=args.input_size,
+        batch_size=args.batch_size,
+        device=args.device,
+        reid_device=args.reid_device,
+        min_score=args.min_score,
+        top_k=args.top_k,
+        force=args.force,
+        car_label=args.car_label,
+    )
+
+
+def _run_reid(args: argparse.Namespace) -> int:
+    index_dir = Path(args.index_dir)
+    index_npz = index_dir / "index.npz"
+    if not index_npz.exists():
+        LOGGER.info("ReID index not found. Building index in %s", index_dir)
+        result = build_reid_index(
+            gallery_dir=Path(args.gallery),
+            reid_opts=Path(args.reid_opts),
+            reid_ckpt=Path(args.reid_ckpt),
+            output_dir=index_dir,
+            input_size=args.input_size,
+            batch_size=args.batch_size,
+            reid_device=args.reid_device,
+            force=args.force,
+        )
+        if result != 0:
+            return result
+    return run_reid_search_cached(
+        plate_id=args.plate_id,
+        weights_path=Path(args.weights),
+        input_dir=Path(args.input),
+        index_dir=index_dir,
+        output_dir=Path(args.debug_dir),
+        conf=args.conf,
+        iou=args.iou,
+        pad=args.pad,
+        input_size=args.input_size,
+        batch_size=args.batch_size,
+        device=args.device,
+        reid_device=args.reid_device,
+        min_score=args.min_score,
+        top_k=args.top_k,
+        force=args.force,
+        car_label=args.car_label,
+    )
+
+
 def main() -> int:
     args = parse_args()
     if args.command == "detect":
@@ -777,6 +1190,14 @@ def main() -> int:
         return _run_clean(args)
     if args.command == "run":
         return _run_pipeline(args)
+    if args.command == "reid":
+        return _run_reid(args)
+    if args.command == "reid-index":
+        return _run_reid_index(args)
+    if args.command == "reid-search":
+        return _run_reid_search(args)
+    if args.command == "video-frames":
+        return _run_video_frames(args)
     LOGGER.error("Unknown command: %s", args.command)
     return 2
 

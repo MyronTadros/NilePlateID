@@ -13,8 +13,11 @@ __pycache__/
 # Model weights
 *.pt
 
+models/reid/**
+
 # OS
 .DS_Store
 
 # Keep gitkeeps
 !models/.gitkeep
+!models/reid/.gitkeep
