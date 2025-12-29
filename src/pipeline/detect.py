@@ -46,14 +46,14 @@ def run_detection(
     results = model.predict(**predict_kwargs)
     detections: list[dict[str, object]] = []
 
-    for path, result in zip(ordered_paths, results, strict=False):
+    for path, result in zip(ordered_paths, results):
         per_image: list[dict[str, object]] = []
         boxes = result.boxes
         if boxes is not None and len(boxes) > 0:
             xyxy = boxes.xyxy.cpu().tolist()
             cls_ids = boxes.cls.cpu().tolist()
             confs = boxes.conf.cpu().tolist()
-            for bbox, cls_id, score in zip(xyxy, cls_ids, confs, strict=False):
+            for bbox, cls_id, score in zip(xyxy, cls_ids, confs):
                 class_id = int(cls_id)
                 per_image.append(
                     {

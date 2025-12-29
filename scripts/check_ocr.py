@@ -52,6 +52,11 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Ultralytics device string (e.g., 'cpu', '0').",
     )
+    parser.add_argument(
+        "--use_enhancement",
+        action="store_true",
+        help="Use enhanced preprocessing (brightness/contrast adjustment).",
+    )
     return parser.parse_args()
 
 

@@ -17,10 +17,14 @@ models/reid/**
 
 # OS
 .DS_Store
+/NilePlateID/temp/
+/temp/*
+/NilePlateID/temp/*
 
 # Keep gitkeeps
 !models/.gitkeep
 !models/reid/.gitkeep
 AGENTS.md
 data/meta/debug/
+data/meta/debug/*
 data/meta/detections.json
