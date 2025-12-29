@@ -34,5 +34,10 @@ def main():
     net_pth_path = "models/reid/net.pth"
     download_file(net_pth_url, net_pth_path)
 
+    # Model 3: reid/opts.yaml
+    opts_yaml_url = "https://drive.google.com/file/d/1m0-YfUm3OjgdhjbrOz_Wr5nOQT7zwB8-/view?usp=drive_link"
+    opts_yaml_path = "models/reid/opts.yaml"
+    download_file(opts_yaml_url, opts_yaml_path)
+
 if __name__ == "__main__":
     main()
