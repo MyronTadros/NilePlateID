@@ -1,16 +1,21 @@
-"""OCR helpers using EasyOCR."""
-
+"""OCR module for license plate text recognition using EasyOCR."""
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 from typing import Iterable
 
 import cv2
-import easyocr
 import numpy as np
 
+try:
+    import easyocr
+except ImportError:
+    easyocr = None
+
+from src.pipeline.enhancement import enhance_plate_crop
+
 LOGGER = logging.getLogger(__name__)
-_READER: easyocr.Reader | None = None
 
 ARABIC_LETTER_RANGES = [
     (0x0621, 0x064A),
@@ -33,23 +38,37 @@ ALLOWLIST_LETTERS = _build_allowlist(ARABIC_LETTER_RANGES, extra="ABCDEFGHIJKLMN
 ALLOWLIST_DIGITS = _build_allowlist(ARABIC_DIGIT_RANGES, extra="0123456789")
 
 
-def _get_reader() -> easyocr.Reader:
-    global _READER
-    if _READER is None:
-        LOGGER.info("Initializing EasyOCR reader")
-        _READER = easyocr.Reader(["ar", "en"])
-    return _READER
-
-
-def _preprocess(crop: np.ndarray) -> np.ndarray:
-    if crop.ndim == 3:
-        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+def _preprocess(crop: np.ndarray, use_enhancement: bool = False, crop_number: int = 1) -> np.ndarray:
+    """Preprocess cropped plate: resize, grayscale, denoise.
+    
+    Args:
+        crop: Input BGR image crop
+        use_enhancement: If True, apply enhanced preprocessing pipeline
+        crop_number: Crop number for saving debug files
+        
+    Returns:
+        Preprocessed grayscale image ready for OCR
+    """
+    if use_enhancement:
+        enhanced = enhance_plate_crop(crop, crop_number=crop_number)
+        if enhanced.size > 0:
+            height, width = enhanced.shape[:2]
+            scale = 4
+            resized = cv2.resize(enhanced, (width * scale, height * scale), 
+                               interpolation=cv2.INTER_CUBIC)
+            return resized
+    
+    # Standard preprocessing: resize, grayscale, denoise
+    height, width = crop.shape[:2]
+    scale = 4
+    resized = cv2.resize(crop, (width * scale, height * scale), interpolation=cv2.INTER_CUBIC)
+    
+    if len(resized.shape) == 3:
+        gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
     else:
-        gray = crop.copy()
-
-    height, width = gray.shape[:2]
-    resized = cv2.resize(gray, (width * 2, height * 2), interpolation=cv2.INTER_CUBIC)
-    denoised = cv2.GaussianBlur(resized, (3, 3), 0)
+        gray = resized
+    
+    denoised = cv2.GaussianBlur(gray, (3, 3), 0)
     return denoised
 
 
@@ -58,60 +77,149 @@ def _bbox_center_x(bbox: Iterable[Iterable[float]]) -> float:
     return sum(xs) / len(xs)
 
 
-def _read_side(
-    reader: easyocr.Reader,
-    image: np.ndarray,
-    allowlist: str,
-    rtl: bool,
-) -> tuple[str, list[float]]:
+_reader = None
+
+def _get_reader():
+    """Get or create EasyOCR reader instance (singleton pattern)."""
+    global _reader
+    if _reader is None:
+        if easyocr is None:
+            LOGGER.error("EasyOCR not installed. Install with: pip install easyocr")
+            return None
+        # Use Arabic language for OCR
+        _reader = easyocr.Reader(['ar'], gpu=False)
+    return _reader
+
+
+def _read_with_easyocr(image: np.ndarray) -> tuple[str, float]:
+    """Use EasyOCR for Arabic text recognition.
+    
+    Args:
+        image: Grayscale or binary image
+        
+    Returns:
+        Tuple of (text, confidence_percentage)
+    """
     if image.size == 0:
-        return "", []
-    results = reader.readtext(image, allowlist=allowlist, detail=1, paragraph=False)
-    if not results:
-        return "", []
+        return "", 0.0
+    
+    reader = _get_reader()
+    if reader is None:
+        return "", 0.0
+    
+    try:
+        results = reader.readtext(image, detail=1)
+        
+        texts = []
+        confs = []
+        
+        for (bbox, text, confidence) in results:
+            if text.strip():
+                texts.append(text.strip())
+                confs.append(confidence * 100)
+        
+        combined_text = ' '.join(texts)
+        mean_conf = sum(confs) / len(confs) if confs else 0.0
+        
+        return combined_text, mean_conf
+        
+    except Exception as e:
+        LOGGER.error(f"EasyOCR error: {e}")
+        return "", 0.0
 
-    ordered = sorted(results, key=lambda item: _bbox_center_x(item[0]), reverse=rtl)
-    texts: list[str] = []
-    confs: list[float] = []
-    for _, text, conf in ordered:
-        text = str(text).strip()
-        if not text:
-            continue
-        texts.append(text)
-        confs.append(float(conf))
 
-    return "".join(texts).strip(), confs
+def post_process(text: str) -> str:
+    """Remove OCR artifacts and special characters from text.
+    
+    Args:
+        text: Raw OCR output
+        
+    Returns:
+        Cleaned text with artifacts removed
+    """
+    text = text.strip()
+    
+    # Remove common OCR artifacts and special characters
+    bad_chars = ['~', '`', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '=', 
+                 '[', ']', '{', '}', '|', '\\', ';', ':', '"', '<', '>', ',', '.', '?', '/', 
+                 '°', '·', '•', '●', '○', '◦', '‣', '⁃', '※', '❖', '✓', '✔', '✗', '✘', '☐', '☑', 
+                 '☒', '★', '☆', '♠', '♣', '♥', '♦', '♤', '♧', '♡', '♢', '▪', '▫', '◊', '◘', '◙', 
+                 '▀', '▄', '█', '▌', '▐', '░', '▒', '▓', '■', '□', '▢', '▣', '▤', '▥', '▦', '▧', 
+                 '▨', '▩', '▬', '▭', '▮', '▯', '▰', '▱', '◆', '◇', '◈', '◉', '◍', '◎', '●', '◐', 
+                 '◑', '◒', '◓', '◔', '◕', '◖', '◗', '❍', '￮', '⊕', '⊖', '⊗', '⊘', '⊙', '⊚', '⊛', 
+                 '⊜', '⊝', '⊞', '⊟', '⊠', '⊡', '⋄', '⋅', '∙', '·', '・', '∘', '○', '◦', '●', '•', 
+                 '‣', '⁃', '∗', '∵', '∴', '∷', '∸', '∹', '∺', '∻', '∼', '∽', '∾', '∿', '≀', '≁', 
+                 '≂', '≃', '≄', '≅', '≆', '≇', '≈', '≉', '≊', '≋', '≌', '≍', '≎', '≏', '≐', '≑', 
+                 '≒', '≓', '≔', '≕', '≖', '≗', '≘', '≙', '≚', '≛', '≜', '≝', '≞', '≟', '≠', '≡', 
+                 '≢', '≣', '≤', '≥', '≦', '≧', '≨', '≩', '⊂', '⊃', '⊄', '⊅', '⊆', '⊇', '⊈', '⊉', 
+                 '⊊', '⊋', 'Ã', '€', '‚', 'ƒ', '„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', 'Ž', ''', 
+                 ''', '"', '"', '•', '–', '—', '˜', '™', 'š', '›', 'œ', 'ž', 'Ÿ', '¡', '¢', '£', '¤', 
+                 '¥', '¦', '§', '¨', '©', 'ª', '«', '¬', '®', '¯', '°', '±', '²', '³', '´', 'µ', '¶', 
+                 '·', '¸', '¹', 'º', '»', '¼', '½', '¾', '¿', '÷', 'Ø', '×', 'ø', '√', '∞', '─', '│', 
+                 '┌', '┐', '└', '┘', '├', '┤', '┬', '┴', '┼', '═', '║', '╔', '╗', '╚', '╝', '╠', '╣', 
+                 '╦', '╩', '╬', '▼', '►', '◄', '↑', '↓', '→', '←', '↔', '↕', '▲', '△', '▴', '▵', '▶', 
+                 '▷', '▸', '▹', '►', '▻', '▼', '▽', '▾', '▿', '◀', '◁', '◂', '◃', '◄', '◅', '、', '。', 
+                 '〈', '〉', '《', '》', '「', '」', '『', '』', '【', '】', '〔', '〕', '〖', '〗', '！', '（', 
+                 '）', '，', '：', '；', '？']
+
+    for char in bad_chars:
+        if char in text:
+            text = text.replace(char, '')
+    
+    return text
 
 
-def read_plate_text(crop: np.ndarray) -> tuple[str, float]:
-    """Return raw text and mean confidence from an image crop."""
+def recognise_easyocr(src_path: str) -> str:
+    """Use EasyOCR to read text from plate image."""
+    try:
+        image = cv2.imread(src_path, cv2.IMREAD_GRAYSCALE)
+        if image is None:
+            return ""
+        text, _ = _read_with_easyocr(image)
+        return text
+    except Exception as e:
+        LOGGER.error(f"EasyOCR error: {e}")
+        return ""
+
+
+def read_plate_text(
+    crop: np.ndarray, 
+    use_enhancement: bool = False,
+    crop_number: int = 1
+) -> tuple[str, float]:
+    """Read text from plate crop with optional enhanced preprocessing.
+    
+    Args:
+        crop: Input plate crop (BGR image)
+        use_enhancement: If True, use enhanced preprocessing and save steps to temp/steps/
+        crop_number: Number for this crop (e.g., 1 for crop1.txt)
+        
+    Returns:
+        Tuple of (text, confidence) where text is the recognized plate text
+        and confidence is the mean OCR confidence
+    """
     if crop.size == 0:
         return "", 0.0
 
-    processed = _preprocess(crop)
+    # Preprocess: resize, grayscale/threshold (saves steps if use_enhancement=True)
+    processed = _preprocess(crop, use_enhancement=use_enhancement, crop_number=crop_number)
+    
+    # Remove top 35% to eliminate decorative text
     height, width = processed.shape[:2]
-    if height >= 4:
-        processed = processed[height // 4 :, :]
-    mid = max(1, processed.shape[1] // 2)
-    left = processed[:, :mid]
-    right = processed[:, mid:]
-
-    reader = _get_reader()
-    letters_text, letters_confs = _read_side(
-        reader, right, allowlist=ALLOWLIST_LETTERS, rtl=True
-    )
-    digits_text, digits_confs = _read_side(
-        reader, left, allowlist=ALLOWLIST_DIGITS, rtl=False
-    )
-
-    parts: list[str] = []
-    if letters_text:
-        parts.append(letters_text)
-    if digits_text:
-        parts.append(digits_text)
-    raw_text = " ".join(parts).strip()
-
-    confs = letters_confs + digits_confs
-    mean_conf = sum(confs) / len(confs) if confs else 0.0
+    if height >= 3:
+        crop_amount = int(height * 0.35)
+        processed = processed[crop_amount:, :]
+    
+    # Run EasyOCR
+    raw_text, mean_conf = _read_with_easyocr(processed)
+    
+    # Clean artifacts
+    raw_text = post_process(raw_text)
+    
+    # Save OCR result to file
+    if crop_number > 0:
+        Path("temp").mkdir(parents=True, exist_ok=True)
+        with open(f"temp/crop{crop_number}.txt", "w", encoding="utf-8") as f:
+            f.write(raw_text)
+    
     return raw_text, mean_conf
-
