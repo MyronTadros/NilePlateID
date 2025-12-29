@@ -21,3 +21,4 @@ models/reid/**
 # Keep gitkeeps
 !models/.gitkeep
 !models/reid/.gitkeep
+AGENTS.md

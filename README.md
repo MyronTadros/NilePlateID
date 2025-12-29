@@ -46,6 +46,30 @@ input images
 
 Recommended: Python 3.10-3.12 (3.13 may work but is less commonly tested).
 
+### Quick Setup (Recommended)
+
+1. **Install uv**:
+   ```bash
+   pip install uv
+   ```
+
+2. **Create virtual environment**:
+   ```bash
+   uv venv
+   ```
+
+3. **Sync environment**:
+   ```bash
+   uv sync
+   ```
+
+4. **Download models**:
+   ```bash
+   uv run python scripts/download_weights.py
+   ```
+
+### Manual Setup
+
 PowerShell:
 
 ```powershell
