@@ -105,7 +105,7 @@ python scripts/check_model.py --weights models/best.pt --input_dir data/incoming
 Check ReID model (loads model + embeds one image):
 
 ```powershell
-python scripts/check_reid_model.py --reid_ckpt models/reid/net.pth --reid_opts models/reid/opts.yaml --image data/incoming/sample.jpg
+python scripts/check_reid_model.py --reid_ckpt models/reid/net.pth --reid_opts models/reid/opts.yaml --image data/incoming/frame_000015.jpg
 ```
 
 

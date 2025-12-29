@@ -22,3 +22,5 @@ models/reid/**
 !models/.gitkeep
 !models/reid/.gitkeep
 AGENTS.md
+data/meta/debug/
+data/meta/detections.json
