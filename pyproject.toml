@@ -17,4 +17,6 @@ dependencies = [
     "torchvision",
     "timm",
     "supervision",
+    "pytesseract>=0.3.13",
+    "streamlit>=1.52.2",
 ]

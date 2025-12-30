@@ -2,742 +2,300 @@
   "batch_size": 32,
   "conf": 0.25,
   "index": "data\\meta\\reid\\index.npz",
-  "input": "data\\incoming",
+  "input": "data\\Video Frames\\Video reid on frames",
   "input_size": 224,
   "iou": 0.45,
   "matches": [
     {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        3.0,
-        146.0,
-        49.0,
-        173.0
-      ],
-      "query_det_conf": 0.421856164932251,
-      "query_image_path": "data\\incoming\\0018_jpg.rf.4bb8c5eaed3f8e8cf1f2d53b92ca13c9.jpg",
-      "score": 0.10153602063655853
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
         0.0,
-        97.0,
-        488.0,
-        300.0
+        186.0,
+        240.0,
+        332.0
       ],
-      "query_det_conf": 0.47073569893836975,
-      "query_image_path": "data\\incoming\\0018_jpg.rf.4bb8c5eaed3f8e8cf1f2d53b92ca13c9.jpg",
-      "score": 0.398693323135376
+      "query_det_conf": 0.9514802694320679,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000012.jpg",
+      "score": 0.4760397970676422
     },
     {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
-        448.0,
-        155.0,
-        504.0,
-        179.0
+        447.0,
+        124.0,
+        805.0,
+        338.0
       ],
-      "query_det_conf": 0.7025184631347656,
-      "query_image_path": "data\\incoming\\0018_jpg.rf.4bb8c5eaed3f8e8cf1f2d53b92ca13c9.jpg",
-      "score": 0.06685534864664078
+      "query_det_conf": 0.9602254033088684,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000012.jpg",
+      "score": 0.7977181077003479
     },
     {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
-        39.0,
-        211.0,
-        121.0,
-        271.0
-      ],
-      "query_det_conf": 0.8598512411117554,
-      "query_image_path": "data\\incoming\\0049_jpg.rf.9a812763bb11d00098d8c5f9300bbcf3.jpg",
-      "score": 0.12229078263044357
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        78.0,
-        166.0,
-        419.0,
-        423.0
-      ],
-      "query_det_conf": 0.9643526673316956,
-      "query_image_path": "data\\incoming\\0049_jpg.rf.9a812763bb11d00098d8c5f9300bbcf3.jpg",
-      "score": 0.275521844625473
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        498.0,
-        200.0,
-        512.0,
-        339.0
-      ],
-      "query_det_conf": 0.4611551761627197,
-      "query_image_path": "data\\incoming\\0049_jpg.rf.9a812763bb11d00098d8c5f9300bbcf3.jpg",
-      "score": 0.03319274261593819
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        32.0,
-        512.0,
-        431.0
-      ],
-      "query_det_conf": 0.9301431179046631,
-      "query_image_path": "data\\incoming\\0074_jpg.rf.f2c85855ec81f5cef8657b5131d4757c.jpg",
-      "score": 0.1996147334575653
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        0.0,
-        512.0,
-        512.0
-      ],
-      "query_det_conf": 0.9122493267059326,
-      "query_image_path": "data\\incoming\\0124_jpg.rf.c8c001d2f35571e6abe99a565ced000c.jpg",
-      "score": 0.15137016773223877
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        72.0,
-        166.0,
-        466.0,
-        455.0
-      ],
-      "query_det_conf": 0.9667537212371826,
-      "query_image_path": "data\\incoming\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6.jpg",
-      "score": 0.9998661279678345
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        460.0,
-        268.0,
-        487.0,
-        275.0
-      ],
-      "query_det_conf": 0.2783609926700592,
-      "query_image_path": "data\\incoming\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6.jpg",
-      "score": 0.3302784562110901
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        497.0,
-        261.0,
-        512.0,
-        288.0
-      ],
-      "query_det_conf": 0.36286985874176025,
-      "query_image_path": "data\\incoming\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6.jpg",
-      "score": 0.4957215189933777
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        63.0,
-        46.0,
-        341.0
-      ],
-      "query_det_conf": 0.6872687935829163,
-      "query_image_path": "data\\incoming\\0205_jpg.rf.6a4e406369d5e41e73499c263fd2fece.jpg",
-      "score": 0.26292189955711365
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        62.0,
-        25.0,
-        81.0
-      ],
-      "query_det_conf": 0.3880753815174103,
-      "query_image_path": "data\\incoming\\0205_jpg.rf.6a4e406369d5e41e73499c263fd2fece.jpg",
-      "score": 0.0022709257900714874
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        63.0,
-        104.0,
-        247.0
-      ],
-      "query_det_conf": 0.9210212230682373,
-      "query_image_path": "data\\incoming\\0205_jpg.rf.6a4e406369d5e41e73499c263fd2fece.jpg",
-      "score": 0.30653202533721924
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        58.0,
-        0.0,
-        460.0,
-        431.0
-      ],
-      "query_det_conf": 0.9363980889320374,
-      "query_image_path": "data\\incoming\\0205_jpg.rf.6a4e406369d5e41e73499c263fd2fece.jpg",
-      "score": 0.3746587932109833
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        85.0,
-        512.0,
-        433.0
-      ],
-      "query_det_conf": 0.9547892212867737,
-      "query_image_path": "data\\incoming\\0213_jpg.rf.af9f49b418f4aed7d1cc69112d401f4e.jpg",
-      "score": 0.37915924191474915
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        364.0,
-        36.0,
-        512.0,
-        263.0
-      ],
-      "query_det_conf": 0.5574163198471069,
-      "query_image_path": "data\\incoming\\0213_jpg.rf.af9f49b418f4aed7d1cc69112d401f4e.jpg",
-      "score": 0.27179771661758423
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        0.0,
-        133.0,
-        204.0
-      ],
-      "query_det_conf": 0.9191379547119141,
-      "query_image_path": "data\\incoming\\0333_jpg.rf.79c0fb9bfe790c18d658a4d8a65dacb9.jpg",
-      "score": 0.2734180688858032
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        21.0,
-        0.0,
-        485.0,
-        467.0
-      ],
-      "query_det_conf": 0.9239370226860046,
-      "query_image_path": "data\\incoming\\0333_jpg.rf.79c0fb9bfe790c18d658a4d8a65dacb9.jpg",
-      "score": 0.44997522234916687
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        230.0,
-        32.0,
-        260.0
-      ],
-      "query_det_conf": 0.6377111673355103,
-      "query_image_path": "data\\incoming\\0335_jpg.rf.b407aaa8592c47d6a25d8c35974900b5.jpg",
-      "score": 0.035706840455532074
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        20.0,
-        225.0,
-        108.0,
-        293.0
-      ],
-      "query_det_conf": 0.8924737572669983,
-      "query_image_path": "data\\incoming\\0335_jpg.rf.b407aaa8592c47d6a25d8c35974900b5.jpg",
-      "score": 0.3241349160671234
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        72.0,
-        184.0,
-        383.0,
-        376.0
-      ],
-      "query_det_conf": 0.9683447480201721,
-      "query_image_path": "data\\incoming\\0335_jpg.rf.b407aaa8592c47d6a25d8c35974900b5.jpg",
-      "score": 0.2738649845123291
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        290.0,
-        191.0,
-        331.0,
-        203.0
-      ],
-      "query_det_conf": 0.49136000871658325,
-      "query_image_path": "data\\incoming\\0335_jpg.rf.b407aaa8592c47d6a25d8c35974900b5.jpg",
-      "score": 0.06525252759456635
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        68.0,
-        512.0,
-        413.0
-      ],
-      "query_det_conf": 0.8357682228088379,
-      "query_image_path": "data\\incoming\\0352_jpg.rf.e14ee3beba6fe4240037744ebd2cd78a.jpg",
-      "score": 0.2449728399515152
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        171.0,
-        89.0,
-        303.0
-      ],
-      "query_det_conf": 0.931677520275116,
-      "query_image_path": "data\\incoming\\0493_jpg.rf.3c8622fe24df283179309ddefb9b96f7.jpg",
-      "score": 0.3145104646682739
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        93.0,
-        152.0,
-        502.0,
-        393.0
-      ],
-      "query_det_conf": 0.9583166837692261,
-      "query_image_path": "data\\incoming\\0493_jpg.rf.3c8622fe24df283179309ddefb9b96f7.jpg",
-      "score": 0.4461899995803833
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        425.0,
-        173.0,
-        512.0,
-        305.0
-      ],
-      "query_det_conf": 0.5449087619781494,
-      "query_image_path": "data\\incoming\\0493_jpg.rf.3c8622fe24df283179309ddefb9b96f7.jpg",
-      "score": 0.4288715124130249
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": false,
-      "query_bbox_xyxy": [
-        8.0,
-        83.0,
-        146.0,
-        126.0
-      ],
-      "query_det_conf": 0.7399775981903076,
-      "query_image_path": "data\\incoming\\0520_jpg.rf.7dd9428aa0695ffb474e3c40d91707f7.jpg",
-      "score": -0.005224067717790604
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        11.0,
-        99.0,
-        146.0,
-        301.0
-      ],
-      "query_det_conf": 0.6357292532920837,
-      "query_image_path": "data\\incoming\\0520_jpg.rf.7dd9428aa0695ffb474e3c40d91707f7.jpg",
-      "score": 0.18894121050834656
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        7.0,
-        47.0,
-        512.0,
-        403.0
-      ],
-      "query_det_conf": 0.9237011075019836,
-      "query_image_path": "data\\incoming\\0520_jpg.rf.7dd9428aa0695ffb474e3c40d91707f7.jpg",
-      "score": 0.3450835645198822
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": false,
-      "query_bbox_xyxy": [
-        90.0,
-        80.0,
-        163.0,
-        107.0
-      ],
-      "query_det_conf": 0.7931968569755554,
-      "query_image_path": "data\\incoming\\0520_jpg.rf.7dd9428aa0695ffb474e3c40d91707f7.jpg",
-      "score": -0.06034379079937935
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        45.0,
-        99.0,
-        489.0,
-        372.0
-      ],
-      "query_det_conf": 0.9445942640304565,
-      "query_image_path": "data\\incoming\\0551_jpg.rf.e04c5f919b309f7d2e42aaddcbe6f34d.jpg",
-      "score": 0.325332909822464
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        421.0,
-        116.0,
-        512.0,
-        258.0
-      ],
-      "query_det_conf": 0.7283229827880859,
-      "query_image_path": "data\\incoming\\0551_jpg.rf.e04c5f919b309f7d2e42aaddcbe6f34d.jpg",
-      "score": 0.17620734870433807
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        177.0,
-        512.0,
-        408.0
-      ],
-      "query_det_conf": 0.9349165558815002,
-      "query_image_path": "data\\incoming\\0564_JPG.rf.854285a3a7f43a2c86c2710e10820c5c.jpg",
-      "score": 0.4412423372268677
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        322.0,
-        168.0,
-        386.0,
+        727.0,
+        131.0,
+        848.0,
         191.0
       ],
-      "query_det_conf": 0.42093583941459656,
-      "query_image_path": "data\\incoming\\0564_JPG.rf.854285a3a7f43a2c86c2710e10820c5c.jpg",
-      "score": 0.03483525291085243
+      "query_det_conf": 0.25785568356513977,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000012.jpg",
+      "score": 0.13983194530010223
     },
     {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": false,
-      "query_bbox_xyxy": [
-        43.0,
-        109.0,
-        80.0,
-        129.0
-      ],
-      "query_det_conf": 0.642101526260376,
-      "query_image_path": "data\\incoming\\0585_JPG.rf.4a7decff30f8b7d00d43749f46eb837a.jpg",
-      "score": -0.0959399938583374
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": false,
-      "query_bbox_xyxy": [
-        86.0,
-        108.0,
-        103.0,
-        121.0
-      ],
-      "query_det_conf": 0.2704100012779236,
-      "query_image_path": "data\\incoming\\0585_JPG.rf.4a7decff30f8b7d00d43749f46eb837a.jpg",
-      "score": -0.13437795639038086
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
-        115.0,
-        90.0,
-        404.0,
-        427.0
+        727.0,
+        128.0,
+        848.0,
+        271.0
       ],
-      "query_det_conf": 0.9632400274276733,
-      "query_image_path": "data\\incoming\\0585_JPG.rf.4a7decff30f8b7d00d43749f46eb837a.jpg",
-      "score": 0.2706795334815979
+      "query_det_conf": 0.7892173528671265,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000012.jpg",
+      "score": 0.5891329050064087
     },
     {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        166.0,
-        107.0,
-        201.0,
-        152.0
-      ],
-      "query_det_conf": 0.8743807077407837,
-      "query_image_path": "data\\incoming\\0585_JPG.rf.4a7decff30f8b7d00d43749f46eb837a.jpg",
-      "score": 0.08920077234506607
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": false,
-      "query_bbox_xyxy": [
-        315.0,
-        106.0,
-        350.0,
-        132.0
-      ],
-      "query_det_conf": 0.25956517457962036,
-      "query_image_path": "data\\incoming\\0585_JPG.rf.4a7decff30f8b7d00d43749f46eb837a.jpg",
-      "score": -0.1808108687400818
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": false,
-      "query_bbox_xyxy": [
-        429.0,
-        97.0,
-        480.0,
-        136.0
-      ],
-      "query_det_conf": 0.5735437870025635,
-      "query_image_path": "data\\incoming\\0585_JPG.rf.4a7decff30f8b7d00d43749f46eb837a.jpg",
-      "score": -0.041322629898786545
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
         0.0,
-        240.0,
-        308.0,
-        512.0
+        185.0,
+        245.0,
+        331.0
       ],
-      "query_det_conf": 0.8623852729797363,
-      "query_image_path": "data\\incoming\\0675_jpg.rf.1496d5fecf1b3d64dacec79795b87414.jpg",
-      "score": 0.4206687808036804
+      "query_det_conf": 0.9531651139259338,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000013.jpg",
+      "score": 0.5199851989746094
     },
     {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        478.0,
+        130.0,
+        720.0,
+        306.0
+      ],
+      "query_det_conf": 0.9438427090644836,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000013.jpg",
+      "score": 0.881608247756958
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        672.0,
+        122.0,
+        848.0,
+        292.0
+      ],
+      "query_det_conf": 0.9631491303443909,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000013.jpg",
+      "score": 0.5039166212081909
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
         0.0,
-        135.0,
-        47.0,
-        228.0
+        182.0,
+        245.0,
+        328.0
       ],
-      "query_det_conf": 0.2702452540397644,
-      "query_image_path": "data\\incoming\\0675_jpg.rf.1496d5fecf1b3d64dacec79795b87414.jpg",
-      "score": 0.17243501543998718
+      "query_det_conf": 0.9595314860343933,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000014.jpg",
+      "score": 0.5075239539146423
     },
     {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        478.0,
+        127.0,
+        720.0,
+        303.0
+      ],
+      "query_det_conf": 0.9468291401863098,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000014.jpg",
+      "score": 0.8825967311859131
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        671.0,
+        119.0,
+        848.0,
+        290.0
+      ],
+      "query_det_conf": 0.96568363904953,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000014.jpg",
+      "score": 0.5209757685661316
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
         0.0,
-        74.0,
-        512.0,
-        455.0
-      ],
-      "query_det_conf": 0.9200620651245117,
-      "query_image_path": "data\\incoming\\0675_jpg.rf.1496d5fecf1b3d64dacec79795b87414.jpg",
-      "score": 0.4552910327911377
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        452.0,
-        98.0,
-        494.0,
-        141.0
-      ],
-      "query_det_conf": 0.5366679430007935,
-      "query_image_path": "data\\incoming\\0675_jpg.rf.1496d5fecf1b3d64dacec79795b87414.jpg",
-      "score": 0.2313842624425888
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        82.0,
-        145.0,
-        283.0
-      ],
-      "query_det_conf": 0.5878479480743408,
-      "query_image_path": "data\\incoming\\0762_jpg.rf.1e0cbbf8180a7f26ac5490b550c05f46.jpg",
-      "score": 0.12713131308555603
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        106.0,
-        512.0,
-        454.0
-      ],
-      "query_det_conf": 0.9435679912567139,
-      "query_image_path": "data\\incoming\\0762_jpg.rf.1e0cbbf8180a7f26ac5490b550c05f46.jpg",
-      "score": 0.16942209005355835
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        63.0,
-        26.0,
-        77.0
-      ],
-      "query_det_conf": 0.48564857244491577,
-      "query_image_path": "data\\incoming\\0801_jpg.rf.e7be9336529187f419a2b89c543ccb50.jpg",
-      "score": 0.25338366627693176
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        64.0,
-        46.0,
-        342.0
-      ],
-      "query_det_conf": 0.7014437317848206,
-      "query_image_path": "data\\incoming\\0801_jpg.rf.e7be9336529187f419a2b89c543ccb50.jpg",
-      "score": 0.34837087988853455
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        63.0,
-        105.0,
-        253.0
-      ],
-      "query_det_conf": 0.9156486392021179,
-      "query_image_path": "data\\incoming\\0801_jpg.rf.e7be9336529187f419a2b89c543ccb50.jpg",
-      "score": 0.3755255341529846
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        58.0,
-        0.0,
-        461.0,
-        430.0
-      ],
-      "query_det_conf": 0.933134138584137,
-      "query_image_path": "data\\incoming\\0801_jpg.rf.e7be9336529187f419a2b89c543ccb50.jpg",
-      "score": 0.438564270734787
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        0.0,
-        512.0,
-        512.0
-      ],
-      "query_det_conf": 0.9635758399963379,
-      "query_image_path": "data\\incoming\\0871_jpg.rf.7de0494c23ae337dfdf7cc08ac885fca.jpg",
-      "score": 0.46454378962516785
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        0.0,
-        123.0,
-        512.0,
-        512.0
-      ],
-      "query_det_conf": 0.9260205626487732,
-      "query_image_path": "data\\incoming\\0934_jpg.rf.9da82e4aad848dceb765d04578a29f5b.jpg",
-      "score": 0.3618919253349304
-    },
-    {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
-      "kept": true,
-      "query_bbox_xyxy": [
-        426.0,
         178.0,
-        512.0,
-        503.0
+        243.0,
+        324.0
       ],
-      "query_det_conf": 0.4370242953300476,
-      "query_image_path": "data\\incoming\\0934_jpg.rf.9da82e4aad848dceb765d04578a29f5b.jpg",
-      "score": 0.2512190043926239
+      "query_det_conf": 0.9616823792457581,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000015.jpg",
+      "score": 0.5159527063369751
     },
     {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        476.0,
+        124.0,
+        719.0,
+        298.0
+      ],
+      "query_det_conf": 0.9383650422096252,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000015.jpg",
+      "score": 0.8928664922714233
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        669.0,
+        113.0,
+        848.0,
+        287.0
+      ],
+      "query_det_conf": 0.9638210535049438,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000015.jpg",
+      "score": 0.5084562301635742
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
         0.0,
-        290.0,
-        120.0,
-        402.0
+        172.0,
+        241.0,
+        320.0
       ],
-      "query_det_conf": 0.9281017780303955,
-      "query_image_path": "data\\incoming\\frame_000015.jpg",
-      "score": 0.4724119305610657
+      "query_det_conf": 0.9629791975021362,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000016.jpg",
+      "score": 0.5123772621154785
     },
     {
-      "best_gallery_path": "data\\gallery\\unknown_c10d78f3\\0170_jpg.rf.485b1ee5277f84e84cb281def71f5dc6_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
-        91.0,
-        282.0,
-        480.0,
-        635.0
+        474.0,
+        119.0,
+        718.0,
+        293.0
       ],
-      "query_det_conf": 0.9643704295158386,
-      "query_image_path": "data\\incoming\\frame_000015.jpg",
-      "score": 0.3257189989089966
+      "query_det_conf": 0.9370384216308594,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000016.jpg",
+      "score": 0.8782534003257751
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        668.0,
+        108.0,
+        848.0,
+        281.0
+      ],
+      "query_det_conf": 0.9690834283828735,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000016.jpg",
+      "score": 0.4856158196926117
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        0.0,
+        168.0,
+        239.0,
+        315.0
+      ],
+      "query_det_conf": 0.9545845985412598,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000017.jpg",
+      "score": 0.5194810628890991
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        474.0,
+        112.0,
+        717.0,
+        290.0
+      ],
+      "query_det_conf": 0.9333131909370422,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000017.jpg",
+      "score": 0.8771032094955444
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        672.0,
+        106.0,
+        848.0,
+        278.0
+      ],
+      "query_det_conf": 0.9632194638252258,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000017.jpg",
+      "score": 0.5067558288574219
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        0.0,
+        164.0,
+        239.0,
+        314.0
+      ],
+      "query_det_conf": 0.9497250318527222,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000018.jpg",
+      "score": 0.5369307994842529
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        474.0,
+        109.0,
+        716.0,
+        287.0
+      ],
+      "query_det_conf": 0.934670090675354,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000018.jpg",
+      "score": 0.8675139546394348
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        664.0,
+        102.0,
+        848.0,
+        276.0
+      ],
+      "query_det_conf": 0.9425912499427795,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000018.jpg",
+      "score": 0.5261921882629395
     }
   ],
   "min_score": 0.0,
   "pad": 0.05,
-  "plate_id": "unknown_c10d78f3",
+  "plate_id": "7571BAASEENRAA",
   "top_k": 5,
   "weights": "models\\best.pt"
 }

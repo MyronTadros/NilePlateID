@@ -10,8 +10,11 @@ import numpy as np
 MATCH_COLOR = (0, 200, 0)
 SKIP_COLOR = (0, 0, 255)
 BOX_THICKNESS = 2
-TEXT_SCALE = 0.6
-TEXT_THICKNESS = 2
+TEXT_SCALE = 0.4
+TEXT_THICKNESS = 1
+SCORE_THRESHOLD = 0.75
+OUTLINE_COLOR = (0, 0, 0)
+OUTLINE_THICKNESS = 2
 
 
 def _to_int_bbox(bbox_xyxy: Iterable[float]) -> tuple[int, int, int, int]:
@@ -47,9 +50,24 @@ def draw_reid_debug(
             origin,
             cv2.FONT_HERSHEY_SIMPLEX,
             TEXT_SCALE,
+            OUTLINE_COLOR,
+            OUTLINE_THICKNESS,
+            lineType=cv2.LINE_AA,
+        )
+        cv2.putText(
+            annotated,
+            label,
+            origin,
+            cv2.FONT_HERSHEY_SIMPLEX,
+            TEXT_SCALE,
             color,
             TEXT_THICKNESS,
             lineType=cv2.LINE_AA,
         )
 
     return annotated
+
+
+
+
+

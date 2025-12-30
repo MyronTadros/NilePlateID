@@ -1,0 +1,46 @@
+site_name: NilePlateID Documentation
+site_description: Egyptian License Plate Recognition with YOLO, OCR, and Vehicle ReID
+site_author: NilePlateID Team
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: blue
+      accent: green
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: blue
+      accent: green
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Architecture: architecture.md
+  - Components:
+    - Classical CV: classical.md
+    - YOLO Detection: yolo.md
+    - Vehicle ReID: reid.md
+  - API Reference: api.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - tables

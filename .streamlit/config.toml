@@ -1,0 +1,8 @@
+[theme]
+# Using system-adaptive theme (no forced dark/light)
+# Primary color works well in both modes
+primaryColor = "#3498DB"
+font = "sans serif"
+
+[server]
+headless = true

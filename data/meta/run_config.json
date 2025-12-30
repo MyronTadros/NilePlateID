@@ -1,0 +1,26 @@
+{
+  "args": {
+    "command": "run",
+    "conf": 0.25,
+    "debug_dir": "data/meta/debug",
+    "device": null,
+    "force": false,
+    "gallery": "data/gallery",
+    "index": "data/meta/index.csv",
+    "input": "data/incoming",
+    "iou": 0.45,
+    "max_debug": true,
+    "ocr_backend": "yolo",
+    "ocr_det_conf": 0.25,
+    "ocr_det_iou": 0.45,
+    "ocr_min_conf": 0.05,
+    "ocr_weights": "models/yolo11m_car_plate_ocr.pt",
+    "pad": 0.05,
+    "plates": "data/plates",
+    "preview_limit": 10,
+    "use_enhancement": false,
+    "weights": "models/best.pt"
+  },
+  "git_commit": "713117972362e018a3595b832d22898bfc10c3ac",
+  "timestamp": "2025-12-30T17:01:02.951490+00:00"
+}
