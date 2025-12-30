@@ -90,7 +90,7 @@ def process_registration(file_path, is_video=False):
             ret, frame = cap.read()
             if not ret:
                 break
-            # Skip frames to speed up registration? maybe every 5th frame
+            # Skip frames to speed up registration
             if frame_idx % 5 != 0:
                 frame_idx += 1
                 continue
