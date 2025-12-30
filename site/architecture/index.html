@@ -960,7 +960,7 @@
 <h1 id="system-architecture">System Architecture</h1>
 <p>NilePlateID uses a modular architecture with three main pipelines.</p>
 <h2 id="overview">Overview</h2>
-<p><img alt="Pipeline Architecture" src="assets/yolo_pipeline.png" /></p>
+<p><img alt="Pipeline Architecture" src="../assets/yolo_pipeline.png" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Input Image/Video
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    │
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    ├─── Classical CV Pipeline ───► Morphological Detection ───► EasyOCR
@@ -1064,7 +1064,7 @@
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    → Store car crop indexed by plate ID
 </code></pre></div>
 <h3 id="reid-flow">ReID Flow</h3>
-<p><img alt="ReID Architecture" src="assets/reid_pipeline.png" /></p>
+<p><img alt="ReID Architecture" src="../assets/reid_pipeline.png" /></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Registration:
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    Image → Detect car → OCR plate → Save to gallery/{plate_id}/
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
@@ -1081,7 +1081,7 @@
 <li><strong>Head</strong>: Detection heads at 3 scales (P3, P4, P5)</li>
 </ul>
 <h3 id="reid-model">ReID Model</h3>
-<p><img alt="Training Architecture" src="assets/training_architecture.png" /></p>
+<p><img alt="Training Architecture" src="../assets/training_architecture.png" /></p>
 <ul>
 <li><strong>Backbone</strong>: ResNet50-IBN (Instance-Batch Normalization)</li>
 <li><strong>Embedding</strong>: 512-dimensional feature vector</li>
