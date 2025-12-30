@@ -86,9 +86,9 @@ def automatic_brightness_and_contrast(
     hist_size = len(hist)
 
     acc = []
-    acc.append(float(hist[0]))
+    acc.append(float(hist[0].item()))
     for index in range(1, hist_size):
-        acc.append(acc[index - 1] + float(hist[index]))
+        acc.append(acc[index - 1] + float(hist[index].item()))
 
     maximum = acc[-1]
     clip_hist_percent *= (maximum / 100.0)
