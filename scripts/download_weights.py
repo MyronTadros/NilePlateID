@@ -39,5 +39,10 @@ def main():
     opts_yaml_path = "models/reid/opts.yaml"
     download_file(opts_yaml_url, opts_yaml_path)
 
+    # Model 4: yolo11m_car_plate_ocr.pt (OCR model for character detection)
+    ocr_model_url = "https://drive.google.com/file/d/1OHouC1XBjIa0qv3hF4eT45QS28Xevvfy/view?usp=sharing"
+    ocr_model_path = "models/yolo11m_car_plate_ocr.pt"
+    download_file(ocr_model_url, ocr_model_path)
+
 if __name__ == "__main__":
     main()

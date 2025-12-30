@@ -28,3 +28,11 @@ AGENTS.md
 data/meta/debug/
 data/meta/debug/*
 data/meta/detections.json
+data/gallery/parking_output.mp4
+data/Video/parking.mp4
+data/gallery/parking_output3.mp4
+data/Video/parking2-cropped.mp4
+data/gallery/parking_output2.mp4
+data/gallery/parking_output1-2.mp4
+data/Video/parking2.mp4
+data/Video/parking3.mp4

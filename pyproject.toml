@@ -16,4 +16,5 @@ dependencies = [
     "torch",
     "torchvision",
     "timm",
+    "supervision",
 ]
