@@ -19,4 +19,5 @@ dependencies = [
     "supervision",
     "pytesseract>=0.3.13",
     "streamlit>=1.52.2",
+    "mkdocs-material>=9.7.1",
 ]
