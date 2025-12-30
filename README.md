@@ -24,22 +24,33 @@ input images
 
 ```
 .
-??? data/
-?   ??? incoming/            # input images (not committed)
-?   ??? datasets/            # training datasets (not committed)
-?   ??? gallery/             # car crops grouped by plate_id (generated)
-?   ??? plates/              # plate crops grouped by plate_id (generated)
-?   ??? meta/                # detections.json, index.csv, debug images (generated)
-??? models/                  # YOLO weights (best.pt not committed)
-?   ??? reid/                # ReID checkpoint + opts.yaml (not committed)
-??? outputs/                 # optional generated outputs
-??? runs/                    # Ultralytics training/inference outputs
-??? scripts/                 # helper scripts (audit, check_*, clean, video)
-??? src/
-?   ??? pipeline/            # detection, OCR backends, association, visualization
-?   ??? cli.py               # main CLI entrypoint
-??? README.md
-??? requirements.txt
++-- AGENTS.md
++-- LICENSE
++-- README.md
++-- SUMMARY.md
++-- main.py
++-- requirements.txt
++-- requirements-dev.txt
++-- pyproject.toml
++-- uv.lock
++-- .python-version
++-- .gitignore
++-- data/
+¦   +-- incoming/            # input images (not committed)
+¦   +-- datasets/            # training datasets (not committed)
+¦   +-- gallery/             # car crops grouped by plate_id (generated)
+¦   +-- plates/              # plate crops grouped by plate_id (generated)
+¦   +-- meta/                # detections.json, index.csv, debug images (generated)
+¦   +-- Video/               # optional input videos (not committed)
++-- models/                  # YOLO weights (best.pt not committed)
+¦   +-- reid/                # ReID checkpoint + opts.yaml (not committed)
++-- scripts/                 # helper scripts (audit, check_*, clean, video)
++-- src/
+¦   +-- pipeline/            # detection, OCR backends, association, visualization
+¦   +-- reid/                # ReID indexing + search
+¦   +-- cli.py               # main CLI entrypoint
++-- tests/
++-- third_party/
 ```
 
 ## Setup
@@ -402,3 +413,4 @@ python -m src.cli reid-search --plate_id ABC123 --input_dir data/incoming --inde
 ## License
 
 MIT. See `LICENSE`.
+
