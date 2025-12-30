@@ -38,7 +38,6 @@ def render():
     
     Many state-of-the-art methods that work well on Latin characters **fail to generalize** to Arabic plates due to:
     - Unique character morphology
-    - Diacritical marks (تشكيل)
     - Similar-looking characters (ب، ت، ث، ن)
     
     ### 🚗 ReID Limitations

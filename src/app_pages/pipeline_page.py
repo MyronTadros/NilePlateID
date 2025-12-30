@@ -31,7 +31,13 @@ def render():
     
     with st.expander("📐 Pipeline Architecture", expanded=False):
         if pipeline_img.exists():
-            st.image(str(pipeline_img), use_container_width=True)
+            st.image(str(pipeline_img), caption="NilePlateID Pipeline", use_container_width=True)
+        
+        # YOLO Architecture
+        yolo_arch_img = ASSETS_DIR / "yolo_architecture.png"
+        if yolo_arch_img.exists():
+            st.image(str(yolo_arch_img), caption="YOLO Detection Architecture", use_container_width=True)
+        
         st.caption("YOLO v11 for detection + Custom YOLO OCR for Arabic character recognition")
     
     st.divider()
@@ -39,11 +45,8 @@ def render():
     st.subheader("📤 1. Upload Image")
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
     
-    st.subheader("🔧 2. Select OCR Model")
-    ocr_option = st.radio(
-        "Choose OCR Engine:",
-        ("YOLO OCR", "EasyOCR")
-    )
+    # YOLO OCR only (EasyOCR moved to Classical page)
+    st.caption("🔤 Using YOLO OCR for Arabic character recognition")
     
     if uploaded_file is not None:
         # Load and display image
@@ -96,35 +99,17 @@ def render():
                     with c1:
                         st.image(plate_rgb, caption="Cropped Plate", width="stretch")
                     
-                    # Run OCR
+                    # Run YOLO OCR
                     text = ""
                     conf = 0.0
                     
-                    if ocr_option == "YOLO OCR":
-                        # Preprocessing for display purpose if any? YOLO usually takes raw crop
-                        # But user asked to "show the preprocessing steps". 
-                        # YOLO OCR pipeline in `yolo_ocr.py` takes raw crop.
-                        try:
-                            ocr_model = load_ocr_model_cached()
-                            text, conf = read_yolo_plate_text(plate_crop, model=ocr_model)
-                            with c2:
-                                st.info("YOLO OCR uses raw crop.")
-                        except Exception as e:
-                            st.error(f"Error loading YOLO OCR: {e}")
-
-                    elif ocr_option == "EasyOCR":
-                        # EasyOCR pipeline in `ocr.py` has preprocessing
-                        # We can call `_preprocess` from `ocr.py` to show it.
-                        from src.pipeline.ocr import _preprocess
-                        preprocessed = _preprocess(plate_crop, use_enhancement=True)
-                        preprocessed_rgb = cv2.cvtColor(preprocessed, cv2.COLOR_GRAY2RGB)
-                        
+                    try:
+                        ocr_model = load_ocr_model_cached()
+                        text, conf = read_yolo_plate_text(plate_crop, model=ocr_model)
                         with c2:
-                            st.image(preprocessed_rgb, caption="Preprocessed (Enhanced)", width="stretch")
-                        
-                        text, conf = read_easyocr_plate_text(plate_crop, use_enhancement=True)
-
-
+                            st.info("YOLO OCR uses raw crop.")
+                    except Exception as e:
+                        st.error(f"Error loading YOLO OCR: {e}")
 
                     with c3:
                         st.success(f"**Detected Text:** {text}")
