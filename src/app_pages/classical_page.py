@@ -23,11 +23,12 @@ except ImportError as e:
     def process(crop, count): return crop
 
 def render():
-    st.header("Classical Approaches")
+    st.markdown("# 🔬 Classical Detection + EasyOCR")
+    st.markdown("*Traditional computer vision techniques for license plate detection*")
     
-    st.info("Using methods from `Classical Detection Method` folder.")
+    st.info("🔍 This pipeline uses color-based segmentation, morphological operations, and contour analysis to detect license plates, followed by EasyOCR for text recognition.")
 
-    uploaded_file = st.file_uploader("Choose an image for Classical Detection...", type=["jpg", "png", "jpeg"], key="classical_uploader")
+    uploaded_file = st.file_uploader("📁 Upload an image", type=["jpg", "png", "jpeg"], key="classical_uploader")
 
     if uploaded_file is not None:
         # Save temp file because the classical script assumes reading from file sometimes or writing to temp

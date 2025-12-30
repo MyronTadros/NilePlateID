@@ -22,13 +22,24 @@ def load_ocr_model_cached():
     return load_yolo_ocr_model(Path(OCR_YOLO_PATH))
 
 def render():
-    st.header("Parking System Pipeline")
+    st.markdown("# 🎯 YOLO Detection Pipeline")
+    st.markdown("*State-of-the-art deep learning for car and plate detection*")
     
-    st.subheader("1. Upload Image")
+    # Architecture diagram
+    ASSETS_DIR = Path(__file__).parent / "assets"
+    pipeline_img = ASSETS_DIR / "yolo_pipeline.png"
+    
+    with st.expander("📐 Pipeline Architecture", expanded=False):
+        if pipeline_img.exists():
+            st.image(str(pipeline_img), use_container_width=True)
+        st.caption("YOLO v11 for detection + Custom YOLO OCR for Arabic character recognition")
+    
+    st.divider()
+    
+    st.subheader("📤 1. Upload Image")
     uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg"])
     
-    # Model Selection
-    st.subheader("2. Select OCR Model")
+    st.subheader("🔧 2. Select OCR Model")
     ocr_option = st.radio(
         "Choose OCR Engine:",
         ("YOLO OCR", "EasyOCR")
