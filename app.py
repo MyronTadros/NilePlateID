@@ -7,7 +7,7 @@ REPO_ROOT = Path(__file__).resolve().parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.app_pages import pipeline_page, classical_page, reid_page, training_page, future_work_page
+from src.app_pages import pipeline_page, classical_page, reid_page, training_page, future_work_page, demo_page
 
 st.set_page_config(
     page_title="NilePlateID",
@@ -151,6 +151,7 @@ def main():
             "🔬 Classical + EasyOCR",
             "📊 Training Dashboard", 
             "🎯 YOLO Pipeline",
+            "🎬 Demo Videos",
             "🔍 Vehicle ReID",
             "🔮 Future Work"
         ],
@@ -173,6 +174,8 @@ def main():
         training_page.render()
     elif page == "🎯 YOLO Pipeline":
         pipeline_page.render()
+    elif page == "🎬 Demo Videos":
+        demo_page.render()
     elif page == "🔍 Vehicle ReID":
         reid_page.render()
     elif page == "🔮 Future Work":
