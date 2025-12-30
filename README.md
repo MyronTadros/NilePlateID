@@ -1,6 +1,6 @@
-# YOLO License Plate Detection + EasyOCR Reading
+# YOLO License Plate Detection + OCR (EasyOCR or YOLO OCR)
 
-End-to-end pipeline for car + license plate detection with Ultralytics YOLO, OCR via EasyOCR, and persistent storage of cropped cars/plates keyed by `plate_id`.
+End-to-end pipeline for car + license plate detection with Ultralytics YOLO, OCR via EasyOCR or YOLO OCR, and persistent storage of cropped cars/plates keyed by `plate_id`.
 
 Key outputs:
 - Per-plate galleries in `data/gallery/<plate_id>/`
@@ -14,8 +14,8 @@ input images
   -> YOLO detect (cars + plates)
   -> associate plate to car (center-in-box, IoU tie-break)
   -> crop car + plate
-  -> OCR preprocess (grayscale + 2x resize + denoise)
-  -> OCR plate text
+  -> OCR preprocess (EasyOCR backend: grayscale + 2x resize + denoise)
+  -> OCR plate text (EasyOCR or YOLO OCR backend)
   -> normalize plate_id
   -> save crops + write index.csv + debug images
 ```
@@ -36,7 +36,7 @@ input images
 ??? runs/                    # Ultralytics training/inference outputs
 ??? scripts/                 # helper scripts (audit, check_*, clean, video)
 ??? src/
-?   ??? pipeline/            # detection, OCR, association, visualization
+?   ??? pipeline/            # detection, OCR backends, association, visualization
 ?   ??? cli.py               # main CLI entrypoint
 ??? README.md
 ??? requirements.txt
@@ -65,8 +65,9 @@ Recommended: Python 3.10-3.12 (3.13 may work but is less commonly tested).
 
 4. **Download models**:
    ```bash
-   uv run python scripts/download_weights.py
+   uv run python -m src.download_weights
    ```
+Use `--force` to overwrite and `--strict` to fail on any download error.
 
 ### Manual Setup
 
@@ -92,6 +93,8 @@ pip install -r requirements-dev.txt
 
 - `models/best.pt`: YOLO weights file. This is not committed. Train a model or download from your experiment runs and place it here.
 - `models/reid/opts.yaml` + `models/reid/net.pth`: ReID model files (not committed). Put the exported opts.yaml and checkpoint here.
+- `models/yolo11m_car_plate_ocr.pt`: YOLO OCR weights for the CLI `--ocr_backend yolo` and `scripts/parking_system.py` (downloaded by `python -m src.download_weights`).
+- Default OCR backend is YOLO; ensure `models/yolo11m_car_plate_ocr.pt` exists or pass `--ocr_backend easyocr`.
 - Input images: place JPG/PNG files in `data/incoming/`.
 
 ## Main commands
@@ -127,6 +130,8 @@ Filter to frames with readable plates (OCR):
 python -m src.cli video-frames --video path/to/video.mp4 --out_dir data/incoming_video/video --fps 2 --require_ocr --weights models/best.pt --ocr_min_conf 0.05
 ```
 
+Use EasyOCR for filtering by adding `--ocr_backend easyocr`.
+
 Run full pipeline (crops + OCR + index):
 
 ReID search can point to video frame folders (e.g., `--input_dir data/incoming_video/<video_name>`).
@@ -134,6 +139,8 @@ ReID search can point to video frame folders (e.g., `--input_dir data/incoming_v
 ```powershell
 python -m src.cli run --weights models/best.pt --input data/incoming --gallery data/gallery --plates data/plates --index data/meta/index.csv --conf 0.25 --iou 0.45 --pad 0.05 --ocr_min_conf 0.3
 ```
+
+Use EasyOCR instead of YOLO OCR by adding `--ocr_backend easyocr`.
 
 Build ReID index (gallery embeddings):
 
@@ -179,6 +186,8 @@ python -m src.cli detect --weights models/best.pt --input data/incoming --out da
 ```powershell
 python -m src.cli run --weights models/best.pt --input data/incoming --gallery data/gallery --plates data/plates --index data/meta/index.csv --conf 0.25 --iou 0.45 --pad 0.05 --ocr_min_conf 0.3
 ```
+
+Use EasyOCR instead of YOLO OCR by adding `--ocr_backend easyocr`.
 
 3) Build ReID index from gallery crops:
 
@@ -233,6 +242,10 @@ python -m src.cli reid-index --gallery_dir data/gallery --reid_opts models/reid/
 - `--iou` (default: 0.45): plate detection IoU threshold
 - `--pad` (default: 0.05): padding fraction applied to plate crops
 - `--ocr_min_conf` (default: 0.05): minimum OCR confidence to keep a frame
+- `--ocr_backend` (default: yolo): OCR backend (`yolo` or `easyocr`)
+- `--ocr_weights` (default: `models/yolo11m_car_plate_ocr.pt`): YOLO OCR weights
+- `--ocr_det_conf` (default: 0.25): YOLO OCR confidence threshold
+- `--ocr_det_iou` (default: 0.45): YOLO OCR IoU threshold
 - `--device` (default: unset): Ultralytics device string (e.g., `cpu`, `0`)
 - `--force` (default: false): overwrite existing outputs
 
@@ -254,6 +267,11 @@ python -m src.cli reid-index --gallery_dir data/gallery --reid_opts models/reid/
 - `--input_dir` (default: `data/incoming`): query images folder
 - `--index_dir` (default: `data/meta/reid`): cached index folder
 - `--debug_dir` (default: `data/meta/reid`): output folder for results/annotated images
+
+What the paths mean:
+- `--input_dir`: the images you want to search (query frames). ReID runs car detection here.
+- `--index_dir`: the cached gallery embeddings from `reid-index` (what you match against).
+
 - `--conf` (default: 0.25): car detection confidence threshold
 - `--iou` (default: 0.45): car detection IoU threshold
 - `--pad` (default: 0.05): padding fraction applied to car crops
@@ -285,11 +303,13 @@ python3 scripts/clean_and_rerun.py
 
 ## Helper scripts
 
+- `src/download_weights.py`: download model weights (`python -m src.download_weights --help`).
 - `scripts/check_model.py`: YOLO smoke test with class names and optional preview (`python scripts/check_model.py --weights models/best.pt --input_dir data/incoming`).
 - `scripts/check_ocr.py`: detect + crop one plate and run OCR (`python scripts/check_ocr.py --weights models/best.pt --input_dir data/incoming`).
+- `scripts/parking_system.py`: demo video pipeline using YOLO OCR (`python scripts/parking_system.py --video data/Video/parking2-cropped.mp4 --output data/gallery/parking_output2.mp4 --det-weights models/best.pt --ocr-weights models/yolo11m_car_plate_ocr.pt`).
 - `scripts/check_reid_model.py`: load ReID model and embed one image (`python scripts/check_reid_model.py --reid_ckpt models/reid/net.pth --reid_opts models/reid/opts.yaml --image data/incoming/sample.jpg`).
 - `scripts/audit_vehicle_reid_vendor.py`: verify vendor imports (`python scripts/audit_vehicle_reid_vendor.py`).
-- `scripts/video_to_frames.py`: extract frames from a video (`python scripts/video_to_frames.py --video path/to/video.mp4 --out_dir data/incoming_video/video --fps 2`), add `--require_ocr` to keep readable plates only.
+- `scripts/video_to_frames.py`: extract frames from a video (`python scripts/video_to_frames.py --video path/to/video.mp4 --out_dir data/incoming_video/video --fps 2`), add `--require_ocr` to keep readable plates only, and `--ocr_backend easyocr` to use EasyOCR.
 - `scripts/clean_artifacts.py`: safe cleanup dry-run/force (`python scripts/clean_artifacts.py --dry_run`).
 - `scripts/clean_and_rerun.py`: clean and rerun with max debug (`python scripts/clean_and_rerun.py`).
 
@@ -303,10 +323,55 @@ python3 scripts/clean_and_rerun.py
   - `debug/`: annotated images with boxes and plate_id labels.
   - `crops_preview/`: sample crops (max debug mode).
   - `run_config.json`: CLI args and git commit (max debug mode).
+
 - `data/meta/reid/`:
   - `index.npz`, `index.csv`: cached gallery embeddings + centroids.
   - `results.csv`, `results.json`: search outputs from `reid-search`.
   - `annotated/`: debug images with match scores.
+
+## Full pipeline walkthrough (step by step)
+
+1) Put model weights in place:
+- `models/best.pt`
+- `models/yolo11m_car_plate_ocr.pt` (default OCR backend)
+- `models/reid/net.pth` + `models/reid/opts.yaml` (only if you want ReID)
+
+If you want the downloader to place them:
+
+```powershell
+python -m src.download_weights
+```
+
+2) Put your input images in `data/incoming/`.
+
+3) (Optional) Clean old outputs:
+
+```powershell
+python -m src.cli clean --force
+```
+
+4) Run the full pipeline (detect + OCR + crops + index.csv):
+
+```powershell
+python -m src.cli run --weights models/best.pt --input data/incoming --gallery data/gallery --plates data/plates --index data/meta/index.csv --conf 0.25 --iou 0.45 --pad 0.05 --ocr_min_conf 0.05
+```
+
+5) Review outputs:
+- `data/gallery/<plate_id>/` car crops
+- `data/plates/<plate_id>/` plate crops
+- `data/meta/index.csv` + `data/meta/debug/`
+
+6) (Optional) Build ReID index from the gallery:
+
+```powershell
+python -m src.cli reid-index --gallery_dir data/gallery --reid_opts models/reid/opts.yaml --reid_ckpt models/reid/net.pth --index_dir data/meta/reid
+```
+
+7) (Optional) Search a new folder of images:
+
+```powershell
+python -m src.cli reid-search --plate_id ABC123 --input_dir data/incoming --index_dir data/meta/reid --debug_dir data/meta/reid
+```
 
 ## Troubleshooting
 
@@ -314,9 +379,10 @@ python3 scripts/clean_and_rerun.py
   - Check that `models/best.pt` matches your dataset classes and the images are readable.
   - Run `scripts/check_model.py` to confirm the model loads and has expected class names.
 - OCR empty or low confidence:
+  - If using YOLO OCR, ensure `models/yolo11m_car_plate_ocr.pt` exists and pass `--ocr_backend yolo`.
   - Inspect plate crops in `data/plates/` and debug images in `data/meta/debug/`.
   - Adjust `--ocr_min_conf`, or improve crop padding with `--pad`.
-  - OCR preprocessing uses grayscale + 2x resize + Gaussian blur before reading.
+  - EasyOCR preprocessing uses grayscale + 2x resize + Gaussian blur before reading.
 - GPU vs CPU:
   - EasyOCR is much faster with a GPU. CPU is supported but slower.
 - Class name mismatch:

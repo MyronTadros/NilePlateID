@@ -56,11 +56,29 @@ def main() -> int:
         default=0.05,
         help="Padding fraction applied to plate crops.",
     )
+    
     parser.add_argument(
-        "--ocr_min_conf",
+        "--ocr_backend",
+        choices=["easyocr", "yolo"],
+        default="yolo",
+        help="OCR backend to use for filtering.",
+    )
+    parser.add_argument(
+        "--ocr_weights",
+        default="models/yolo11m_car_plate_ocr.pt",
+        help="YOLO OCR weights (repo-relative by default).",
+    )
+    parser.add_argument(
+        "--ocr_det_conf",
         type=float,
-        default=0.05,
-        help="Minimum OCR confidence to keep a frame.",
+        default=0.25,
+        help="Confidence threshold for YOLO OCR.",
+    )
+    parser.add_argument(
+        "--ocr_det_iou",
+        type=float,
+        default=0.45,
+        help="IoU threshold for YOLO OCR.",
     )
     parser.add_argument(
         "--device",
@@ -100,6 +118,10 @@ def main() -> int:
         pad=args.pad,
         device=args.device,
         ocr_min_conf=args.ocr_min_conf,
+        ocr_backend=args.ocr_backend,
+        ocr_weights=Path(args.ocr_weights),
+        ocr_det_conf=args.ocr_det_conf,
+        ocr_det_iou=args.ocr_det_iou,
     )
 
 

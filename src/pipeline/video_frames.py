@@ -85,6 +85,10 @@ def extract_frames(
     pad: float = 0.05,
     device: str | None = None,
     ocr_min_conf: float = 0.05,
+    ocr_backend: str = "yolo",
+    ocr_weights: Path | None = None,
+    ocr_det_conf: float = 0.25,
+    ocr_det_iou: float = 0.45,
     plate_label: str = "plate",
 ) -> int:
     if not video_path.is_file():
@@ -106,7 +110,7 @@ def extract_frames(
             LOGGER.error("Output exists (use --force): %s", out_dir)
             return 2
 
-    ocr_model = None
+    det_model = None
     read_plate_text = None
     if require_ocr:
         if weights_path is None:
@@ -116,12 +120,41 @@ def extract_frames(
             LOGGER.error("Weights not found: %s", weights_path)
             return 2
         from ultralytics import YOLO
-        from src.pipeline.ocr import read_plate_text as _read_plate_text
 
         LOGGER.info("Loading YOLO model for OCR filtering: %s", weights_path)
-        ocr_model = YOLO(str(weights_path))
-        read_plate_text = _read_plate_text
-        LOGGER.info("OCR filtering enabled (min_conf=%.2f)", ocr_min_conf)
+        det_model = YOLO(str(weights_path))
+
+        if ocr_backend == "yolo":
+            if ocr_weights is None:
+                LOGGER.error("--ocr_weights is required for yolo OCR backend")
+                return 2
+            if not ocr_weights.is_file():
+                LOGGER.error("OCR weights not found: %s", ocr_weights)
+                return 2
+            from src.pipeline.yolo_ocr import load_model as _load_model
+            from src.pipeline.yolo_ocr import read_plate_text as _read_plate_text
+
+            ocr_model = _load_model(ocr_weights)
+
+            def read_plate_text(crop):
+                return _read_plate_text(
+                    crop,
+                    model=ocr_model,
+                    conf=ocr_det_conf,
+                    iou=ocr_det_iou,
+                    device=device,
+                )
+        else:
+            from src.pipeline.ocr import read_plate_text as _read_plate_text
+
+            def read_plate_text(crop):
+                return _read_plate_text(crop)
+
+        LOGGER.info(
+            "OCR filtering enabled (backend=%s, min_conf=%.2f)",
+            ocr_backend,
+            ocr_min_conf,
+        )
 
     cap = cv2.VideoCapture(str(video_path))
     if not cap.isOpened():
@@ -157,7 +190,7 @@ def extract_frames(
             if require_ocr:
                 if not _frame_has_readable_plate(
                     frame,
-                    model=ocr_model,
+                    model=det_model,
                     plate_label=plate_label,
                     conf=conf,
                     iou=iou,

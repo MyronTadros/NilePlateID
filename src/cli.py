@@ -18,7 +18,8 @@ from src.pipeline.clean import execute_deletions, plan_deletions
 from src.pipeline.crop import clamp_bbox, crop_image, validate_bbox
 from src.pipeline.detect import run_detection
 from src.pipeline.normalize import normalize_plate_id
-from src.pipeline.ocr import read_plate_text
+from src.pipeline.ocr import read_plate_text as read_plate_text_easy
+from src.pipeline.yolo_ocr import load_model as load_yolo_ocr_model, read_plate_text as read_plate_text_yolo
 from src.pipeline.visualize import draw_debug, draw_plate_id_debug
 from src.pipeline.video_frames import extract_frames
 from src.reid.search import build_reid_index, run_reid_search_cached
@@ -178,6 +179,30 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=0.05,
         help="Minimum OCR confidence for accepting a plate ID.",
+    )
+    
+    run_parser.add_argument(
+        "--ocr_backend",
+        choices=["easyocr", "yolo"],
+        default="yolo",
+        help="OCR backend to use.",
+    )
+    run_parser.add_argument(
+        "--ocr_weights",
+        default="models/yolo11m_car_plate_ocr.pt",
+        help="YOLO OCR weights (repo-relative by default).",
+    )
+    run_parser.add_argument(
+        "--ocr_det_conf",
+        type=float,
+        default=0.25,
+        help="Confidence threshold for YOLO OCR.",
+    )
+    run_parser.add_argument(
+        "--ocr_det_iou",
+        type=float,
+        default=0.45,
+        help="IoU threshold for YOLO OCR.",
     )
     run_parser.add_argument(
         "--max_debug",
@@ -502,6 +527,30 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=0.05,
         help="Minimum OCR confidence to keep a frame.",
+    )
+    
+    video_parser.add_argument(
+        "--ocr_backend",
+        choices=["easyocr", "yolo"],
+        default="yolo",
+        help="OCR backend to use for filtering.",
+    )
+    video_parser.add_argument(
+        "--ocr_weights",
+        default="models/yolo11m_car_plate_ocr.pt",
+        help="YOLO OCR weights (repo-relative by default).",
+    )
+    video_parser.add_argument(
+        "--ocr_det_conf",
+        type=float,
+        default=0.25,
+        help="Confidence threshold for YOLO OCR.",
+    )
+    video_parser.add_argument(
+        "--ocr_det_iou",
+        type=float,
+        default=0.45,
+        help="IoU threshold for YOLO OCR.",
     )
     video_parser.add_argument(
         "--device",
@@ -857,11 +906,43 @@ def _run_pipeline(args: argparse.Namespace) -> int:
         preview_dir = repo_root / "data" / "meta" / "crops_preview"
         run_config_path = repo_root / "data" / "meta" / "run_config.json"
 
+    
     if not weights_path.is_file():
         LOGGER.error("Weights not found: %s", weights_path)
         return 2
 
+    ocr_backend = args.ocr_backend
+    if ocr_backend == "yolo":
+        ocr_weights = Path(args.ocr_weights)
+        if not ocr_weights.is_file():
+            LOGGER.error("OCR weights not found: %s", ocr_weights)
+            return 2
+        try:
+            ocr_model = load_yolo_ocr_model(ocr_weights)
+        except Exception as exc:
+            LOGGER.error("Failed to load YOLO OCR model: %s", exc)
+            return 2
+        if args.use_enhancement:
+            LOGGER.info("Ignoring --use_enhancement for YOLO OCR backend.")
+
+        def read_plate(crop, crop_number):
+            return read_plate_text_yolo(
+                crop,
+                model=ocr_model,
+                conf=args.ocr_det_conf,
+                iou=args.ocr_det_iou,
+                device=args.device,
+            )
+    else:
+        def read_plate(crop, crop_number):
+            return read_plate_text_easy(
+                crop,
+                use_enhancement=args.use_enhancement,
+                crop_number=crop_number,
+            )
+
     image_paths = _collect_images(input_path)
+
     if not image_paths:
         LOGGER.error("No images found in: %s", input_path)
         return 2
@@ -994,11 +1075,7 @@ def _run_pipeline(args: argparse.Namespace) -> int:
                 continue
 
             global_crop_counter += 1
-            raw_text, ocr_conf = read_plate_text(
-                plate_crop, 
-                use_enhancement=args.use_enhancement,
-                crop_number=global_crop_counter
-            )
+            raw_text, ocr_conf = read_plate(plate_crop, global_crop_counter)
             if raw_text.strip() and ocr_conf >= args.ocr_min_conf:
                 plate_id = normalize_plate_id(raw_text)
             else:
@@ -1119,6 +1196,10 @@ def _run_video_frames(args: argparse.Namespace) -> int:
         pad=args.pad,
         device=args.device,
         ocr_min_conf=args.ocr_min_conf,
+        ocr_backend=args.ocr_backend,
+        ocr_weights=Path(args.ocr_weights),
+        ocr_det_conf=args.ocr_det_conf,
+        ocr_det_iou=args.ocr_det_iou,
     )
 
 
