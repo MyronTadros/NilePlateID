@@ -15,7 +15,7 @@ if str(CLASSICAL_DIR) not in sys.path:
 
 try:
     from plate_detection import detect, process
-    from ocr_processing import recognise_easyocr, recognise_tesseract, post_process
+    from ocr_processing import recognise_easyocr, post_process
 except ImportError as e:
     st.error(f"Failed to import Classical modules: {e}")
     # Define dummy functions so the app doesn't crash immediateley
@@ -59,7 +59,7 @@ def render():
         
         col1, col2 = st.columns(2)
         with col1:
-            st.image(image, caption="Uploaded Image", use_container_width=True)
+            st.image(image, caption="Uploaded Image", width="stretch")
             
         if st.button("Run Classical Pipeline"):
             with st.spinner("Running classical detection algorithms..."):
@@ -71,7 +71,7 @@ def render():
                 
                 # Display detection result image with LP markers
                 with col2:
-                    st.image(cv2.cvtColor(result_img, cv2.COLOR_BGR2RGB), caption="Detection Result (with LP markers)", use_container_width=True)
+                    st.image(cv2.cvtColor(result_img, cv2.COLOR_BGR2RGB), caption="Detection Result (with LP markers)", width="stretch")
 
                 if crops:
                     st.success(f"Detected {len(crops)} potential plates.")
@@ -91,7 +91,7 @@ def render():
                         for idx, step_path in enumerate(det_steps):
                             step_name = os.path.basename(step_path).replace(".png", "").replace("_", " ").title()
                             with cols[idx % 3]:
-                                st.image(step_path, caption=step_name, use_container_width=True)
+                                st.image(step_path, caption=step_name, width="stretch")
                     
                     st.divider()
                     st.subheader("Plate Processing & OCR")
@@ -120,7 +120,7 @@ def render():
                             for idx, step_path in enumerate(plate_steps):
                                 step_name = os.path.basename(step_path).split('_', 2)[-1].replace(".png", "").replace("_", " ").title()
                                 with cols[idx % 3]:
-                                    st.image(step_path, caption=step_name, use_container_width=True)
+                                    st.image(step_path, caption=step_name, width="stretch")
 
                         # Final OCR
                         st.write("**OCR Results:**")
@@ -133,16 +133,10 @@ def render():
                             easyocr_out_path = f"temp/crop{plate_num}_easyocr"
                             easyocr_result = recognise_easyocr(threshold_path, easyocr_out_path)
                             
-                            # Run Tesseract
-                            tesseract_out_path = f"temp/crop{plate_num}_tesseract"
-                            tesseract_result = recognise_tesseract(threshold_path, tesseract_out_path)
-                            
                             # Clean up OCR output files (removes special characters)
                             easyocr_txt_path = easyocr_out_path + '.txt'
-                            tesseract_txt_path = tesseract_out_path + '.txt'
                             
                             e_text_clean = ""
-                            t_text_clean = ""
                             
                             if easyocr_result == 0 and os.path.exists(easyocr_txt_path):
                                 # post_process modifies the file and returns the cleaned text
@@ -150,16 +144,9 @@ def render():
                             else:
                                 e_text_clean = "EasyOCR error"
                             
-                            if tesseract_result == 0 and os.path.exists(tesseract_txt_path):
-                                # post_process modifies the file and returns the cleaned text
-                                t_text_clean = post_process(tesseract_txt_path)
-                            else:
-                                t_text_clean = "Tesseract error"
-                            
-                            with col_ocr1:
-                                st.info(f"**EasyOCR**: {e_text_clean}")
-                            with col_ocr2:
-                                st.warning(f"**Tesseract**: {t_text_clean}")
+                            # with col_ocr1:
+                            st.info(f"**EasyOCR**: {e_text_clean}")
+
                         else:
                             st.error("Could not find processed image for OCR.")
 

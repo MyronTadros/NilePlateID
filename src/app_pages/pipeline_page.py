@@ -8,7 +8,6 @@ from ultralytics import YOLO
 
 from src.pipeline.yolo_ocr import load_model as load_yolo_ocr_model, read_plate_text as read_yolo_plate_text
 from src.pipeline.ocr import read_plate_text as read_easyocr_plate_text
-import pytesseract
 
 # Model paths configuration
 DET_MODEL_PATH = "models/best.pt"
@@ -32,7 +31,7 @@ def render():
     st.subheader("2. Select OCR Model")
     ocr_option = st.radio(
         "Choose OCR Engine:",
-        ("YOLO OCR", "EasyOCR", "Tesseract (Experimental)")
+        ("YOLO OCR", "EasyOCR")
     )
     
     if uploaded_file is not None:
@@ -44,7 +43,7 @@ def render():
         
         col1, col2 = st.columns(2)
         with col1:
-            st.image(image, caption="Uploaded Image", use_column_width=True)
+            st.image(image, caption="Uploaded Image", width="stretch")
             
         with st.spinner("Detecting cars and plates..."):
             det_model = load_det_model()
@@ -55,7 +54,7 @@ def render():
             res_plotted_rgb = cv2.cvtColor(res_plotted, cv2.COLOR_BGR2RGB)
             
             with col2:
-                st.image(res_plotted_rgb, caption="Detections (YOLO)", use_column_width=True)
+                st.image(res_plotted_rgb, caption="Detections (YOLO)", width="stretch")
 
             # Extract Plates
             boxes = results[0].boxes
@@ -84,7 +83,7 @@ def render():
                     c1, c2, c3 = st.columns([1, 1, 2])
                     
                     with c1:
-                        st.image(plate_rgb, caption="Cropped Plate", use_column_width=True)
+                        st.image(plate_rgb, caption="Cropped Plate", width="stretch")
                     
                     # Run OCR
                     text = ""
@@ -110,27 +109,11 @@ def render():
                         preprocessed_rgb = cv2.cvtColor(preprocessed, cv2.COLOR_GRAY2RGB)
                         
                         with c2:
-                            st.image(preprocessed_rgb, caption="Preprocessed (Enhanced)", use_column_width=True)
+                            st.image(preprocessed_rgb, caption="Preprocessed (Enhanced)", width="stretch")
                         
                         text, conf = read_easyocr_plate_text(plate_crop, use_enhancement=True)
 
-                    elif ocr_option == "Tesseract (Experimental)":
-                        # Tesseract
-                        gray = cv2.cvtColor(plate_crop, cv2.COLOR_BGR2GRAY)
-                        # Maybe simple threshold
-                        _, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-                         
-                        with c2:
-                            st.image(thresh, caption="Thresholded (Otsu)", use_column_width=True)
-                            
-                        # Config for Arabic might be needed
-                        # text = pytesseract.image_to_string(thresh, lang='ara+eng')
-                        try:
-                             text = pytesseract.image_to_string(thresh) # Default eng
-                             conf = 0.0 # Tesseract confidence handling is complex
-                        except Exception as e:
-                            st.error(f"Tesseract not installed or configured: {e}")
-                            text = "Error"
+
 
                     with c3:
                         st.success(f"**Detected Text:** {text}")

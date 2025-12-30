@@ -39,7 +39,7 @@ def draw_reid_debug(
         except (TypeError, ValueError):
             score = 0.0
         kept = bool(match.get("kept", False))
-        color = MATCH_COLOR if score >= SCORE_THRESHOLD else SKIP_COLOR
+        color = MATCH_COLOR if kept else SKIP_COLOR
         label = f"{plate_id} {score:.3f}"
         x_min, y_min, x_max, y_max = _to_int_bbox(bbox)
         cv2.rectangle(annotated, (x_min, y_min), (x_max, y_max), color, BOX_THICKNESS)

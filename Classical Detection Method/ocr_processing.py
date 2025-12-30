@@ -95,7 +95,11 @@ def recognise_tesseract(src_path, out_path, lang='ara'):
 
     # run tesseract command
     # psm 6 = assume a single uniform block of text
+    tessdata_dir = os.environ.get("TESSDATA_PREFIX")
     cmd = [tesseract_cmd, src_path, out_path, '-l', lang, '--psm', '6', '--dpi', '300', '--oem', '1']
+    if tessdata_dir:
+        cmd.extend(['--tessdata-dir', tessdata_dir])
+
     try:
         import subprocess
         subprocess.run(cmd, check=True)
