@@ -92,7 +92,7 @@ def detect(img_rgb):
                 white_mask = cv2.bitwise_or(white_mask, white_mask_bright)
 
                 white_sum = white_mask.sum()
-                threshold = 5000  # this threshold works well
+                threshold = 1500  # lowered from 5000 to be more permissive with different lighting conditions
                 print("  White/Gray:", white_sum, "threshold:", threshold)
 
                 # if we found enough white/gray pixels
@@ -178,7 +178,7 @@ def detect(img_rgb):
                         # if we couldn't find white contours, just use the original contour
                         rect_full = cv2.minAreaRect(cnt)
                         box_full = cv2.boxPoints(rect_full)
-                        box_full = np.int0(box_full)
+                        box_full = np.int32(box_full)
                         bx = box_full[:, 0]
                         by = box_full[:, 1]
                         x_min = max(0, int(bx.min()))
@@ -237,12 +237,9 @@ def detect(img_rgb):
                     
                     print("  Chars found:", chars)
 
-                    # plates should have between 5 and 20 characters (roughly)
-                    if 20 > chars > 4:
-                        # draw on the image to show we found something
-                        img_rgb = cv2.putText(img_rgb, 'LP', (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
-                        box = np.int0(pts_full)
-                        cv2.drawContours(img_rgb, [box], 0, (0, 0, 255), 2)
+                    img_rgb = cv2.putText(img_rgb, 'LP', (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+                    box = np.int32(pts_full)
+                    cv2.drawContours(img_rgb, [box], 0, (0, 0, 255), 2)
 
     return img_rgb, crops
 

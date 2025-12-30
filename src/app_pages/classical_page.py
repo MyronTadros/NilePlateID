@@ -8,7 +8,6 @@ from pathlib import Path
 from PIL import Image
 
 # Add Classical Method to sys.path
-# We use absolute path to be safe
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CLASSICAL_DIR = REPO_ROOT / "Classical Detection Method"
 if str(CLASSICAL_DIR) not in sys.path:
@@ -60,30 +59,30 @@ def render():
         
         col1, col2 = st.columns(2)
         with col1:
-            st.image(image, caption="Uploaded Image", use_column_width=True)
+            st.image(image, caption="Uploaded Image", use_container_width=True)
             
         if st.button("Run Classical Pipeline"):
             with st.spinner("Running classical detection algorithms..."):
                 # 1. Detection
-                # Redirect stdout to capture prints if needed, but not critical
                 result_img, crops = detect(img_bgr)
                 
                 # Use glob to find generated step images in temp/steps
-                # The names are hardcoded in plate_detection.py:
-                # "1_blue_color_detection.png", "2_closing_morphology.png"
-                
                 step_images = sorted(glob.glob("temp/steps/*.png"))
                 
+                # Display detection result image with LP markers
                 with col2:
-                    st.image(cv2.cvtColor(result_img, cv2.COLOR_BGR2RGB), caption="Detection Result", use_column_width=True)
+                    st.image(cv2.cvtColor(result_img, cv2.COLOR_BGR2RGB), caption="Detection Result (with LP markers)", use_container_width=True)
 
                 if crops:
                     st.success(f"Detected {len(crops)} potential plates.")
                     
-                    st.divider()
-                    st.subheader("Intermediate Steps (Detection)")
+                    # Save the detection result image
+                    cv2.imwrite('temp/detection.jpg', result_img)
                     
-                    # Display detection steps
+                    st.divider()
+                    st.subheader("Intermediate Detection Steps")
+                    
+                    # Display detection steps (blue detection, closing morphology, etc.)
                     # We look for steps that don't start with "plate" (those are per-plate steps)
                     det_steps = [s for s in step_images if "plate" not in os.path.basename(s)]
                     
@@ -92,7 +91,7 @@ def render():
                         for idx, step_path in enumerate(det_steps):
                             step_name = os.path.basename(step_path).replace(".png", "").replace("_", " ").title()
                             with cols[idx % 3]:
-                                st.image(step_path, caption=step_name, use_column_width=True)
+                                st.image(step_path, caption=step_name, use_container_width=True)
                     
                     st.divider()
                     st.subheader("Plate Processing & OCR")
@@ -101,34 +100,61 @@ def render():
                         plate_num = i + 1
                         st.markdown(f"### Plate #{plate_num}")
                         
+                        # Save original crop
+                        cv2.imwrite(f'temp/crop_original_{plate_num}.jpg', crop)
+                        
                         # Process (Enhancement, thresholding)
                         # The `process` function saves steps like `plate{num}_3_...`
                         processed_crop = process(crop, plate_num)
                         
+                        # Save processed crop
+                        cv2.imwrite(f'temp/crop{plate_num}.jpg', processed_crop)
+                        
                         # Find steps for this plate
                         plate_steps = sorted(glob.glob(f"temp/steps/plate{plate_num}_*.png"))
                         
+                        # Display plate processing steps
                         if plate_steps:
-                            cols = st.columns(len(plate_steps))
+                            st.write("**Processing Steps:**")
+                            cols = st.columns(min(len(plate_steps), 3))
                             for idx, step_path in enumerate(plate_steps):
                                 step_name = os.path.basename(step_path).split('_', 2)[-1].replace(".png", "").replace("_", " ").title()
-                                with cols[idx]:
-                                    st.image(step_path, caption=step_name, use_column_width=True)
+                                with cols[idx % 3]:
+                                    st.image(step_path, caption=step_name, use_container_width=True)
 
                         # Final OCR
-                        # `processed_crop` is the thresholded image
-                        
+                        st.write("**OCR Results:**")
                         col_ocr1, col_ocr2 = st.columns(2)
                         
                         # EasyOCR
-                        # We can pass the path to the thresholded image saved by `process`
                         threshold_path = f"temp/steps/plate{plate_num}_6_threshold.png"
                         if os.path.exists(threshold_path):
-                            e_text = recognise_easyocr(threshold_path)
-                            e_text_clean = post_process(e_text)
+                            # Run EasyOCR
+                            easyocr_out_path = f"temp/crop{plate_num}_easyocr"
+                            easyocr_result = recognise_easyocr(threshold_path, easyocr_out_path)
                             
-                            t_text = recognise_tesseract(threshold_path, f"temp/crop{plate_num}_tesseract")
-                            t_text_clean = post_process(t_text)
+                            # Run Tesseract
+                            tesseract_out_path = f"temp/crop{plate_num}_tesseract"
+                            tesseract_result = recognise_tesseract(threshold_path, tesseract_out_path)
+                            
+                            # Clean up OCR output files (removes special characters)
+                            easyocr_txt_path = easyocr_out_path + '.txt'
+                            tesseract_txt_path = tesseract_out_path + '.txt'
+                            
+                            e_text_clean = ""
+                            t_text_clean = ""
+                            
+                            if easyocr_result == 0 and os.path.exists(easyocr_txt_path):
+                                # post_process modifies the file and returns the cleaned text
+                                e_text_clean = post_process(easyocr_txt_path)
+                            else:
+                                e_text_clean = "EasyOCR error"
+                            
+                            if tesseract_result == 0 and os.path.exists(tesseract_txt_path):
+                                # post_process modifies the file and returns the cleaned text
+                                t_text_clean = post_process(tesseract_txt_path)
+                            else:
+                                t_text_clean = "Tesseract error"
                             
                             with col_ocr1:
                                 st.info(f"**EasyOCR**: {e_text_clean}")

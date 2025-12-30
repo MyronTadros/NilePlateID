@@ -13,9 +13,9 @@ def automatic_brightness_and_contrast(image, clip_hist_percent=10):
 
     # calculate cumulative distribution
     acc = []
-    acc.append(float(hist[0]))
+    acc.append(float(hist[0][0]))
     for index in range(1, hist_size):
-        acc.append(acc[index -1] + float(hist[index]))
+        acc.append(acc[index -1] + float(hist[index][0]))
 
     # find the clip values
     maximum = acc[-1]
