@@ -81,6 +81,12 @@ def main() -> int:
         help="IoU threshold for YOLO OCR.",
     )
     parser.add_argument(
+        "--ocr_min_conf",
+        type=float,
+        default=0.05,
+        help="Minimum OCR confidence required to keep a frame.",
+    )
+    parser.add_argument(
         "--device",
         default=None,
         help="Ultralytics device string (e.g., 'cpu', '0').",
@@ -128,3 +134,4 @@ def main() -> int:
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     raise SystemExit(main())
+

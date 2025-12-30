@@ -1,5 +1,23 @@
 query_image_path,query_bbox_xyxy,query_det_conf,plate_id,score,best_gallery_path,kept
-data\incoming\0109.jpg,"[0.0, 395.0, 14.0, 429.0]",0.5923,666SAADSAADSAAD,0.376402,data\gallery\666SAADSAADSAAD\0109_000_car.jpg,True
-data\incoming\0109.jpg,"[42.0, 397.0, 65.0, 424.0]",0.4082,666SAADSAADSAAD,0.244279,data\gallery\666SAADSAADSAAD\0109_000_car.jpg,True
-data\incoming\0109.jpg,"[23.0, 216.0, 665.0, 781.0]",0.9670,666SAADSAADSAAD,0.998929,data\gallery\666SAADSAADSAAD\0109_000_car.jpg,True
-data\incoming\0109.jpg,"[613.0, 380.0, 720.0, 600.0]",0.9061,666SAADSAADSAAD,0.601036,data\gallery\666SAADSAADSAAD\0109_000_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000012.jpg,"[0.0, 186.0, 240.0, 332.0]",0.9515,7571BAASEENRAA,0.476040,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000012.jpg,"[447.0, 124.0, 805.0, 338.0]",0.9602,7571BAASEENRAA,0.797718,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000012.jpg,"[727.0, 131.0, 848.0, 191.0]",0.2579,7571BAASEENRAA,0.139832,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000012.jpg,"[727.0, 128.0, 848.0, 271.0]",0.7892,7571BAASEENRAA,0.589133,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000013.jpg,"[0.0, 185.0, 245.0, 331.0]",0.9532,7571BAASEENRAA,0.519985,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000013.jpg,"[478.0, 130.0, 720.0, 306.0]",0.9438,7571BAASEENRAA,0.881608,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000013.jpg,"[672.0, 122.0, 848.0, 292.0]",0.9631,7571BAASEENRAA,0.503917,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000014.jpg,"[0.0, 182.0, 245.0, 328.0]",0.9595,7571BAASEENRAA,0.507524,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000014.jpg,"[478.0, 127.0, 720.0, 303.0]",0.9468,7571BAASEENRAA,0.882597,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000014.jpg,"[671.0, 119.0, 848.0, 290.0]",0.9657,7571BAASEENRAA,0.520976,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000015.jpg,"[0.0, 178.0, 243.0, 324.0]",0.9617,7571BAASEENRAA,0.515953,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000015.jpg,"[476.0, 124.0, 719.0, 298.0]",0.9384,7571BAASEENRAA,0.892866,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000015.jpg,"[669.0, 113.0, 848.0, 287.0]",0.9638,7571BAASEENRAA,0.508456,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000016.jpg,"[0.0, 172.0, 241.0, 320.0]",0.9630,7571BAASEENRAA,0.512377,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000016.jpg,"[474.0, 119.0, 718.0, 293.0]",0.9370,7571BAASEENRAA,0.878253,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000016.jpg,"[668.0, 108.0, 848.0, 281.0]",0.9691,7571BAASEENRAA,0.485616,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000017.jpg,"[0.0, 168.0, 239.0, 315.0]",0.9546,7571BAASEENRAA,0.519481,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000017.jpg,"[474.0, 112.0, 717.0, 290.0]",0.9333,7571BAASEENRAA,0.877103,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000017.jpg,"[672.0, 106.0, 848.0, 278.0]",0.9632,7571BAASEENRAA,0.506756,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000018.jpg,"[0.0, 164.0, 239.0, 314.0]",0.9497,7571BAASEENRAA,0.536931,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000018.jpg,"[474.0, 109.0, 716.0, 287.0]",0.9347,7571BAASEENRAA,0.867514,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
+data\Video Frames\Video reid on frames\frame_000018.jpg,"[664.0, 102.0, 848.0, 276.0]",0.9426,7571BAASEENRAA,0.526192,data\gallery\7571BAASEENRAA\frame_000016_001_car.jpg,True
