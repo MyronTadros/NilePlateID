@@ -108,4 +108,4 @@ def plot_results(original, edges, harris_vis, crop):
 
 # --- USAGE ---
 # Replace 'car_image.jpg' with your actual file path (e.g., the Alfa Romeo image you uploaded)
-process_and_crop_plate('blue car.jpeg')
+# process_and_crop_plate('blue car.jpeg')
