@@ -10,8 +10,11 @@ import numpy as np
 MATCH_COLOR = (0, 200, 0)
 SKIP_COLOR = (0, 0, 255)
 BOX_THICKNESS = 2
-TEXT_SCALE = 0.6
-TEXT_THICKNESS = 2
+TEXT_SCALE = 0.4
+TEXT_THICKNESS = 1
+SCORE_THRESHOLD = 0.75
+OUTLINE_COLOR = (0, 0, 0)
+OUTLINE_THICKNESS = 2
 
 
 def _to_int_bbox(bbox_xyxy: Iterable[float]) -> tuple[int, int, int, int]:
@@ -36,11 +39,21 @@ def draw_reid_debug(
         except (TypeError, ValueError):
             score = 0.0
         kept = bool(match.get("kept", False))
-        color = MATCH_COLOR if kept else SKIP_COLOR
+        color = MATCH_COLOR if score >= SCORE_THRESHOLD else SKIP_COLOR
         label = f"{plate_id} {score:.3f}"
         x_min, y_min, x_max, y_max = _to_int_bbox(bbox)
         cv2.rectangle(annotated, (x_min, y_min), (x_max, y_max), color, BOX_THICKNESS)
         origin = (x_min, max(0, y_min - 6))
+        cv2.putText(
+            annotated,
+            label,
+            origin,
+            cv2.FONT_HERSHEY_SIMPLEX,
+            TEXT_SCALE,
+            OUTLINE_COLOR,
+            OUTLINE_THICKNESS,
+            lineType=cv2.LINE_AA,
+        )
         cv2.putText(
             annotated,
             label,
@@ -53,3 +66,8 @@ def draw_reid_debug(
         )
 
     return annotated
+
+
+
+
+

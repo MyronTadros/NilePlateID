@@ -2,66 +2,300 @@
   "batch_size": 32,
   "conf": 0.25,
   "index": "data\\meta\\reid\\index.npz",
-  "input": "data\\incoming\\0109.jpg",
+  "input": "data\\Video Frames\\Video reid on frames",
   "input_size": 224,
   "iou": 0.45,
   "matches": [
     {
-      "best_gallery_path": "data\\gallery\\666SAADSAADSAAD\\0109_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
         0.0,
-        395.0,
-        14.0,
-        429.0
+        186.0,
+        240.0,
+        332.0
       ],
-      "query_det_conf": 0.5922917723655701,
-      "query_image_path": "data\\incoming\\0109.jpg",
-      "score": 0.37640202045440674
+      "query_det_conf": 0.9514802694320679,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000012.jpg",
+      "score": 0.4760397970676422
     },
     {
-      "best_gallery_path": "data\\gallery\\666SAADSAADSAAD\\0109_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
-        42.0,
-        397.0,
-        65.0,
-        424.0
+        447.0,
+        124.0,
+        805.0,
+        338.0
       ],
-      "query_det_conf": 0.4082305133342743,
-      "query_image_path": "data\\incoming\\0109.jpg",
-      "score": 0.24427901208400726
+      "query_det_conf": 0.9602254033088684,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000012.jpg",
+      "score": 0.7977181077003479
     },
     {
-      "best_gallery_path": "data\\gallery\\666SAADSAADSAAD\\0109_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
-        23.0,
-        216.0,
-        665.0,
-        781.0
+        727.0,
+        131.0,
+        848.0,
+        191.0
       ],
-      "query_det_conf": 0.9670078158378601,
-      "query_image_path": "data\\incoming\\0109.jpg",
-      "score": 0.9989289045333862
+      "query_det_conf": 0.25785568356513977,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000012.jpg",
+      "score": 0.13983194530010223
     },
     {
-      "best_gallery_path": "data\\gallery\\666SAADSAADSAAD\\0109_000_car.jpg",
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
       "kept": true,
       "query_bbox_xyxy": [
-        613.0,
-        380.0,
+        727.0,
+        128.0,
+        848.0,
+        271.0
+      ],
+      "query_det_conf": 0.7892173528671265,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000012.jpg",
+      "score": 0.5891329050064087
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        0.0,
+        185.0,
+        245.0,
+        331.0
+      ],
+      "query_det_conf": 0.9531651139259338,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000013.jpg",
+      "score": 0.5199851989746094
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        478.0,
+        130.0,
         720.0,
-        600.0
+        306.0
       ],
-      "query_det_conf": 0.9060778021812439,
-      "query_image_path": "data\\incoming\\0109.jpg",
-      "score": 0.6010364294052124
+      "query_det_conf": 0.9438427090644836,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000013.jpg",
+      "score": 0.881608247756958
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        672.0,
+        122.0,
+        848.0,
+        292.0
+      ],
+      "query_det_conf": 0.9631491303443909,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000013.jpg",
+      "score": 0.5039166212081909
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        0.0,
+        182.0,
+        245.0,
+        328.0
+      ],
+      "query_det_conf": 0.9595314860343933,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000014.jpg",
+      "score": 0.5075239539146423
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        478.0,
+        127.0,
+        720.0,
+        303.0
+      ],
+      "query_det_conf": 0.9468291401863098,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000014.jpg",
+      "score": 0.8825967311859131
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        671.0,
+        119.0,
+        848.0,
+        290.0
+      ],
+      "query_det_conf": 0.96568363904953,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000014.jpg",
+      "score": 0.5209757685661316
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        0.0,
+        178.0,
+        243.0,
+        324.0
+      ],
+      "query_det_conf": 0.9616823792457581,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000015.jpg",
+      "score": 0.5159527063369751
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        476.0,
+        124.0,
+        719.0,
+        298.0
+      ],
+      "query_det_conf": 0.9383650422096252,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000015.jpg",
+      "score": 0.8928664922714233
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        669.0,
+        113.0,
+        848.0,
+        287.0
+      ],
+      "query_det_conf": 0.9638210535049438,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000015.jpg",
+      "score": 0.5084562301635742
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        0.0,
+        172.0,
+        241.0,
+        320.0
+      ],
+      "query_det_conf": 0.9629791975021362,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000016.jpg",
+      "score": 0.5123772621154785
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        474.0,
+        119.0,
+        718.0,
+        293.0
+      ],
+      "query_det_conf": 0.9370384216308594,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000016.jpg",
+      "score": 0.8782534003257751
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        668.0,
+        108.0,
+        848.0,
+        281.0
+      ],
+      "query_det_conf": 0.9690834283828735,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000016.jpg",
+      "score": 0.4856158196926117
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        0.0,
+        168.0,
+        239.0,
+        315.0
+      ],
+      "query_det_conf": 0.9545845985412598,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000017.jpg",
+      "score": 0.5194810628890991
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        474.0,
+        112.0,
+        717.0,
+        290.0
+      ],
+      "query_det_conf": 0.9333131909370422,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000017.jpg",
+      "score": 0.8771032094955444
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        672.0,
+        106.0,
+        848.0,
+        278.0
+      ],
+      "query_det_conf": 0.9632194638252258,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000017.jpg",
+      "score": 0.5067558288574219
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        0.0,
+        164.0,
+        239.0,
+        314.0
+      ],
+      "query_det_conf": 0.9497250318527222,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000018.jpg",
+      "score": 0.5369307994842529
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        474.0,
+        109.0,
+        716.0,
+        287.0
+      ],
+      "query_det_conf": 0.934670090675354,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000018.jpg",
+      "score": 0.8675139546394348
+    },
+    {
+      "best_gallery_path": "data\\gallery\\7571BAASEENRAA\\frame_000016_001_car.jpg",
+      "kept": true,
+      "query_bbox_xyxy": [
+        664.0,
+        102.0,
+        848.0,
+        276.0
+      ],
+      "query_det_conf": 0.9425912499427795,
+      "query_image_path": "data\\Video Frames\\Video reid on frames\\frame_000018.jpg",
+      "score": 0.5261921882629395
     }
   ],
   "min_score": 0.0,
   "pad": 0.05,
-  "plate_id": "666SAADSAADSAAD",
+  "plate_id": "7571BAASEENRAA",
   "top_k": 5,
   "weights": "models\\best.pt"
 }
