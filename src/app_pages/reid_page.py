@@ -87,8 +87,8 @@ def render():
             # 1. Load ReID Model
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             try:
-                # Assuming input_size 256 for vehicle ReID (standard)
-                input_size = 256 
+                # Input size 224 matches third_party/vehicle_reid/extract_features.py
+                input_size = 224 
                 model = _load_reid_model(REID_OPTS, REID_CKPT, device)
             except Exception as e:
                 st.error(f"Error loading ReID model: {e}")
