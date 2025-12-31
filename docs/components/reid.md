@@ -6,7 +6,7 @@ Re-identify vehicles across cameras using deep learning embeddings.
 
 Vehicle ReID matches cars by visual appearance, independent of license plates. This is useful when plates are occluded or unreadable.
 
-![ReID Architecture](assets/reid_pipeline.png)
+![ReID Architecture](../assets/reid_pipeline.png)
 
 ## How It Works
 
@@ -28,7 +28,7 @@ Each detected car is compared to the gallery using cosine similarity.
 
 ## Model Architecture
 
-![Training Architecture](assets/training_architecture.png)
+![Training Architecture](../assets/training_architecture.png)
 
 ### ResNet50-IBN Backbone
 

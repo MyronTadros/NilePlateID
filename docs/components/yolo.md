@@ -6,7 +6,7 @@ Deep learning-based detection and text recognition for license plates.
 
 The YOLO pipeline uses YOLOv11 for object detection and a custom YOLO OCR model for Arabic character recognition.
 
-![YOLO Pipeline](assets/yolo_pipeline.png)
+![YOLO Pipeline](../assets/yolo_pipeline.png)
 
 ## Detection Model
 
@@ -120,7 +120,7 @@ Models were trained on Ultralytics HUB:
 - **Detection**: Custom Egyptian plate dataset
 - **OCR**: Character-level annotations on plate crops
 
-See [Training Dashboard](../training_page.py) for metrics.
+See the Training Dashboard in the Streamlit app for metrics.
 
 ## Comparison with EasyOCR
 

@@ -19,9 +19,9 @@ NilePlateID is an end-to-end AI pipeline for detecting Egyptian license plates, 
 |--------------|-------------|
 | [Getting Started](getting-started.md) | Installation and setup |
 | [Architecture](architecture.md) | System design overview |
-| [Classical CV](classical.md) | Traditional CV approaches |
-| [YOLO Detection](yolo.md) | Deep learning detection |
-| [Vehicle ReID](reid.md) | Re-identification system |
+| [Classical CV](components/classical.md) | Traditional CV approaches |
+| [YOLO Detection](components/yolo.md) | Deep learning detection |
+| [Vehicle ReID](components/reid.md) | Re-identification system |
 | [API Reference](api.md) | CLI commands |
 
 ## Demo

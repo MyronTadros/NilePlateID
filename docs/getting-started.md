@@ -74,6 +74,6 @@ NilePlateID/
 ## Next Steps
 
 - [Architecture Overview](architecture.md)
-- [Classical CV Methods](classical.md)
-- [YOLO Detection](yolo.md)
-- [Vehicle ReID](reid.md)
+- [Classical CV Methods](components/classical.md)
+- [YOLO Detection](components/yolo.md)
+- [Vehicle ReID](components/reid.md)

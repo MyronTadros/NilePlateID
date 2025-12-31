@@ -2,6 +2,10 @@
 
 End-to-end AI pipeline for Egyptian license plate detection, OCR, and vehicle re-identification.
 
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://myrontadros.github.io/NilePlateID/)
+
+📖 **[View Full Documentation](https://myrontadros.github.io/NilePlateID/)**
+
 ## ✨ Features
 
 - **YOLO Detection** - Car and license plate detection with YOLOv11
