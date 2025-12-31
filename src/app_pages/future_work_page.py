@@ -30,7 +30,6 @@ def render():
     
     | Challenge | Description |
     |-----------|-------------|
-    | **Script Complexity** | Arabic has connected letters with contextual shapes |
     | **Right-to-Left** | Text direction differs from Western plates |
     | **Limited Datasets** | Few public Arabic plate datasets available |
     | **Regional Variations** | Egyptian plates differ from Saudi, UAE, etc. |
@@ -92,4 +91,15 @@ def render():
     """)
     
     st.divider()
+        # Contributors
+    st.markdown("## 👥 Team Contributors")
+    
+    st.markdown("""
+    | Name | Contribution |
+    |------|-------------|
+    | **Hamdy Awad** | Morphological Detection + EasyOCR |
+    | **Mohamed Alaa** | YOLO Pipeline + ReID  + Streamlit|
+    | **Myron Milad** | ReID + CLI Pipeline |
+    | **Bola Warsy** | Canny Edge Detection  + Integration|
+    """)
     st.info("💡 **Contribute:** This project is open for collaboration. Reach out if you're interested in advancing Arabic license plate recognition!")

@@ -28,9 +28,11 @@ nav:
   - Getting Started: getting-started.md
   - Architecture: architecture.md
   - Components:
-    - Classical CV: classical.md
-    - YOLO Detection: yolo.md
-    - Vehicle ReID: reid.md
+    - components/index.md
+    - Classical CV: components/classical.md
+    - YOLO Detection: components/yolo.md
+    - YOLO OCR: components/yolo-ocr.md
+    - Vehicle ReID: components/reid.md
   - API Reference: api.md
 
 markdown_extensions:

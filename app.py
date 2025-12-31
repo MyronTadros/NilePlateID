@@ -7,7 +7,7 @@ REPO_ROOT = Path(__file__).resolve().parent
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from src.app_pages import pipeline_page, classical_page, reid_page, training_page, future_work_page, demo_page
+from src.app_pages import pipeline_page, classical_page, reid_page, training_page, future_work_page, demo_page, overview_page
 
 st.set_page_config(
     page_title="NilePlateID",
@@ -148,6 +148,7 @@ def main():
     page = st.sidebar.radio(
         "📍 Navigate",
         [
+            "🏠 Overview",
             "🔬 Classical + EasyOCR",
             "📊 Training Dashboard", 
             "🎯 YOLO Pipeline",
@@ -168,7 +169,9 @@ def main():
     st.sidebar.caption("Made with ❤️ for CV Project")
 
     # Route to pages
-    if page == "🔬 Classical + EasyOCR":
+    if page == "🏠 Overview":
+        overview_page.render()
+    elif page == "🔬 Classical + EasyOCR":
         classical_page.render()
     elif page == "📊 Training Dashboard":
         training_page.render()
